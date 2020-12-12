@@ -33,7 +33,7 @@ public class CacheConfig {
      * @param redisConnectionFactory
      * @return {@link RedisTemplate< String, Object>}
      */
-    @Bean
+    @Bean(name = "redisTemplate")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();

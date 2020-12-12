@@ -1,6 +1,7 @@
-package com.sun.springbootdemo.config;
+package com.sun.springbootdemo.mybatis.config;
 
 import com.github.pagehelper.PageHelper;
+import com.sun.springbootdemo.mybatis.intercepter.MybatisIntercepter;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -115,6 +116,7 @@ public class DataSourceConfig {
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
         // 指定 MyBatis 所用日志的具体实现，未指定时将自动查找,未查找到将关闭日志
         configuration.setLogImpl(org.apache.ibatis.logging.stdout.StdOutImpl.class);
+        //configuration.addInterceptor(new MybatisIntercepter());
         return new org.apache.ibatis.session.Configuration();
     }
 
@@ -134,7 +136,7 @@ public class DataSourceConfig {
         bean.setDataSource(dataSource);
         // 加载Mybatis的配置
         bean.setConfiguration(configuration);
-        //bean.setPlugins(new Interceptor[]{pageHelper});
+        bean.setPlugins(new MybatisIntercepter());
         return bean.getObject();
     }
 
@@ -150,6 +152,7 @@ public class DataSourceConfig {
     public SqlSessionFactory sessionFactorySlave(@Autowired @Qualifier("dataSourceSlave") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
+        bean.setPlugins(new MybatisIntercepter());
         return bean.getObject();
     }
 

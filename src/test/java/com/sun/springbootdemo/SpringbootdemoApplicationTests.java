@@ -1,9 +1,6 @@
 package com.sun.springbootdemo;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.CacheLoader;
 import com.github.benmanes.caffeine.cache.Caffeine;
@@ -11,8 +8,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.springbootdemo.config.BeanDefinitionConfig;
 import com.sun.springbootdemo.config.CommconProperty;
-import com.sun.springbootdemo.config.DataSourceConfig;
 import com.sun.springbootdemo.mapper.EntitiesConfigMapper;
+import com.sun.springbootdemo.mybatis.config.DataSourceConfig;
 import com.sun.springbootdemo.service.CommonBusiniessService;
 import com.sun.springbootdemo.service.TestService;
 import com.sun.springbootdemo.service.entities.Animals;
@@ -25,17 +22,13 @@ import com.sun.springbootdemo.service.entities.Student;
 import lombok.extern.log4j.Log4j2;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cache.caffeine.CaffeineCache;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.context.ApplicationContext;
@@ -44,8 +37,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
@@ -57,11 +48,8 @@ import java.util.List;
 import java.util.Map;
 
 @Log4j2
-@SpringBootTest(classes = {com.sun.springbootdemo.SpringbootdemoApplication.class})
-@RunWith(SpringRunner.class)
-@Rollback(value = false)
 @MapperScan("com.sun.springbootdemo.mapper")
-public class SpringbootdemoApplicationTests {
+public class SpringbootdemoApplicationTests extends BaseJnuit5Test {
 
     protected long endTime;
 
@@ -134,18 +122,6 @@ public class SpringbootdemoApplicationTests {
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
-    @Before
-    public void begin() {
-        startTime = System.currentTimeMillis();
-        log.info("Junit StartTime: " + startTime);
-    }
-
-    @After
-    public void after() {
-        this.endTime = System.currentTimeMillis();
-        log.info("Junit EndTime: " + endTime);
-    }
-
 
     @Test
     public void contextLoads() {
@@ -161,7 +137,13 @@ public class SpringbootdemoApplicationTests {
         pet.setAge(1);
         String jsonPerson = "{\\\"name\\\":\\\"夏侯惇\\\",\\\"Age\\\":25,\\\"sex\\\":\\\"m\\\",\\\"birthDay\\\":\\\"1992-09-08\\\",\\\"pet\\\":{\\\"name\\\":\\\"鹦鹉\\\",\\\"age\\\":1,\\\"sex\\\":null},\\\"boss\\\":true}";
         Person p = new Person("夏侯惇", 25, "m", true, LocalDate.of(1992, 9, 8), pet);
-        String persongJson = objectMapper.writeValueAsString(p);
+        String s = objectMapper.writeValueAsString(p);
+
+        Map<String, Object> map = objectMapper.readValue(s, Map.class);
+        System.out.println(map);
+        /*String persongJson = objectMapper.writeValueAsString(p);
+        objectMapper.readValue(jsonPerson, new TypeReference<Person>() {
+        });
         JavaType javaType = objectMapper.getTypeFactory().constructType(Person.class);
         Person p2 = objectMapper.readValue(persongJson, javaType);
         JsonNode jsonNode = objectMapper.readTree(persongJson);
@@ -174,7 +156,8 @@ public class SpringbootdemoApplicationTests {
         petNode.put("age", 1);
         rootNode.set("pet", petNode);
         String str = objectMapper.writeValueAsString(rootNode); //{"Root":"root","pet":{"name":"鹦鹉","age":1}}
-        System.out.println(str);
+        System.out.println(str);*/
+
     }
 
     @Test
@@ -230,12 +213,19 @@ public class SpringbootdemoApplicationTests {
     }
 
     @Test
-    public void dbTest() {
+    public void selectAllTest() {
         PageHelper.startPage(1, 2, true);
         List<Map<String, Object>> data = entitiesConfigMapper.findAll();
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(data);
         List<Map<String, Object>> pageData = pageInfo.getList();
         System.out.println(pageData);
+    }
+
+    @Test
+    public void selectOneTest() {
+        String userId = "21";
+        String city = entitiesConfigMapper.selectOne(userId);
+        log.info("city:" + city);
     }
 
     @Test
@@ -248,17 +238,10 @@ public class SpringbootdemoApplicationTests {
     }
 
     @Test
-    public void RedisTest() {
-        //redisTemplate.opsForValue().set("domain", record);
-        /*Object r = redisTemplate.opsForValue().get("sundz::25");
-        System.out.println("redisTemplate-->>" + r);*/
-    }
-
-    @Test
     public void cacheTest() {
         testService.test();
         ThreadLocal<String> threadLocal = new ThreadLocal<>();
-        
+
 
     }
 

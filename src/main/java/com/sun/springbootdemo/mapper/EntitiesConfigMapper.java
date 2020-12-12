@@ -31,4 +31,7 @@ public interface EntitiesConfigMapper {
     @Select("select * from cic_user_info user")
     List<Map<String, Object>> findAll();
 
+    String selectOne(String userId);
+
+
 }

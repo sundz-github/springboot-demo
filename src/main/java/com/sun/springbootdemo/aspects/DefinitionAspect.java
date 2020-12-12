@@ -3,6 +3,7 @@ package com.sun.springbootdemo.aspects;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -43,6 +44,9 @@ public class DefinitionAspect {
     public Object operationAspect(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info("环绕通知正在执行.....................");
         long currentTime = System.currentTimeMillis();
+        Object[] args = joinPoint.getArgs();
+        Object target = joinPoint.getTarget();
+        Signature signature = joinPoint.getSignature();
         /**
          * 放行被拦截的目标方法并返回目标方法返回值
          */

@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @EnableConfigurationProperties(CommconProperty.class)  //可以使配置生效但是不会向容器注入bean
 @Configuration(value = "configuration")
+//@Import(CommonServer.class)
 public class BeanDefinitionConfig implements BeanDefinitionRegistryPostProcessor {
 
     @Bean(name = "record")

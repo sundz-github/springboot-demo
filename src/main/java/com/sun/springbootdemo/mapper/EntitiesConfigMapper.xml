@@ -9,7 +9,7 @@
     <select id="selectInfo" resultType="com.sun.springbootdemo.service.entities.City">
         select * from cic_user_info;
     </select>
-    <!--<select id="selectInfo" resultType="java.util.Map">
-        select * from cic_user_info;
-    </select>-->
+    <select id="selectOne" resultType="java.lang.String">
+        select a.cic_city from cic_user_info a where a.cic_user_id = #{userId,jdbcType=VARCHAR};
+    </select>
 </mapper>
