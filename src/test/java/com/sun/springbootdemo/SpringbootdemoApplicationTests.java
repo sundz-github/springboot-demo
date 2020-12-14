@@ -6,7 +6,7 @@ import com.github.benmanes.caffeine.cache.CacheLoader;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.springbootdemo.config.BeanDefinitionConfig;
+import com.sun.springbootdemo.config.BeansConfig;
 import com.sun.springbootdemo.config.CommconProperty;
 import com.sun.springbootdemo.mapper.EntitiesConfigMapper;
 import com.sun.springbootdemo.mybatis.config.DataSourceConfig;
@@ -126,7 +126,7 @@ public class SpringbootdemoApplicationTests extends BaseJnuit5Test {
     @Test
     public void contextLoads() {
         //Assert.assertNotNull(personService);
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(BeanDefinitionConfig.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(BeansConfig.class);
         ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
         System.out.println("studentService的bean->" + context.getBeanFactory());
     }

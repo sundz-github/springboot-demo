@@ -22,8 +22,8 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "citycode", ignoreInvalidFields = true)
 @Log4j2
 @PropertySource(value = "classpath:common.properties")
-public class CommconProperty {
-
+public class CommconProperty /*implements CommonApi*/ {
+    
    /* private String name;
 
     private int size;*/
@@ -42,10 +42,10 @@ public class CommconProperty {
         return "sundz";
     }
 
+    /*@Override*/
     public String test2(String arg) {
         log.info("CommconProperty类的test2方法正在执行中......................");
         return "hello world";
     }
-
 
 }

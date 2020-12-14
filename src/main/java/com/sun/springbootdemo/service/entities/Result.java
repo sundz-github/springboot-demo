@@ -4,7 +4,6 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * @description:
@@ -31,8 +30,14 @@ public class Result<T> implements Serializable {
 
     public Result(T body) {
         this.code = HttpStatus.OK.value();
-        this.message = "数据成功返回";
+        this.message = "数据成功返回!";
         this.body = body;
+    }
+
+    public Result(Builder<T> builder) {
+        this.code = builder.code;
+        this.message = builder.message;
+        this.body = builder.body;
     }
 
     public Result() {
@@ -43,25 +48,32 @@ public class Result<T> implements Serializable {
      */
     public static class Builder<T> {
 
-        private Result<T> result;
+        private int code;
+
+        private String message;
+
+        private T body;
 
         public Builder() {
         }
 
-        private Result<T> getInstance() {
-            if (Objects.isNull(result)) {
-                result = new Result<>();
-            }
-            return result;
+        public Builder<T> code(int code) {
+            this.code = code;
+            return this;
+        }
+
+        public Builder<T> message(String message) {
+            this.message = message;
+            return this;
         }
 
         public Builder<T> bodey(T body) {
-            getInstance().setBody(body);
+            this.body = body;
             return this;
         }
 
         public Result<T> build() {
-            return this.getInstance();
+            return new Result<>(this);
         }
     }
 

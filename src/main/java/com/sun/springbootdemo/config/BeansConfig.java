@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * @describtion: Bean自定义配置
@@ -23,8 +24,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @EnableConfigurationProperties(CommconProperty.class)  //可以使配置生效但是不会向容器注入bean
 @Configuration(value = "configuration")
-//@Import(CommonServer.class)
-public class BeanDefinitionConfig implements BeanDefinitionRegistryPostProcessor {
+@Import({SelfImporSelector.class})
+public class BeansConfig implements BeanDefinitionRegistryPostProcessor {
 
     @Bean(name = "record")
     @ConditionalOnMissingBean(name = "record")

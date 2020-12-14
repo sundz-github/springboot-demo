@@ -40,13 +40,17 @@ public class DefinitionAspect {
     /**
      * @field: 环绕通知  -- >> ProceedingJoinPoint   统计方法耗时
      */
-    @Around(value = "execution(* com.sun.springbootdemo.config.CommconProperty.test2(..))", argNames = "joinPoint")
-    public Object operationAspect(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Around(value = "execution(* com.sun.springbootdemo.config.CommconProperty.test2(..)) && args(arg)", argNames = "joinPoint,arg")
+    public Object operationAspect(ProceedingJoinPoint joinPoint, String arg) throws Throwable {
         log.info("环绕通知正在执行.....................");
         long currentTime = System.currentTimeMillis();
         Object[] args = joinPoint.getArgs();
         Object target = joinPoint.getTarget();
         Signature signature = joinPoint.getSignature();
+        Class declaringType = signature.getDeclaringType();
+        int modifiers = signature.getModifiers();
+        String declaringTypeName = signature.getDeclaringTypeName();
+
         /**
          * 放行被拦截的目标方法并返回目标方法返回值
          */
