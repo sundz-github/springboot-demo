@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfigura
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Log4j2
@@ -18,6 +20,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 //需要制定监听器扫描路径
 @ServletComponentScan("com.sun.springbootdemo.web")
 @EnableCaching
+@EnableScheduling
+@EnableAsync
 public class SpringbootdemoApplication {
 
 

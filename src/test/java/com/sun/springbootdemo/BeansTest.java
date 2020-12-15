@@ -23,7 +23,7 @@ public class BeansTest extends BaseJnuit5Test {
     private CommonServer commonServer;
 
     @Autowired
-    private CommconProperty commonApi;
+    private CommconProperty commconProperty;
 
     @Autowired
     private RestTemplateBuilder restTemplateBuilder;
