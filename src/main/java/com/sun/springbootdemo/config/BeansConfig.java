@@ -3,6 +3,7 @@ package com.sun.springbootdemo.config;
 
 import com.sun.springbootdemo.service.entities.Record;
 import com.sun.springbootdemo.service.entities.Student;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.springframework.beans.BeansException;
@@ -22,16 +23,26 @@ import org.springframework.context.annotation.Import;
  * @author: Sundz
  * @date: 2020/5/9 22:56
  */
-@EnableConfigurationProperties(CommconProperty.class)  //可以使配置生效但是不会向容器注入bean
-@Configuration(value = "configuration")
+@EnableConfigurationProperties(CommconProperty.class)  //使配置生效
+// proxyBeanMethods属性设为false时  统一配置类内获取对象时  将不通过cglib代理  而是直接new 对象获取
+@Configuration(value = "configuration", proxyBeanMethods = false)
+
 @Import({SelfImporSelector.class})
+@Log4j2
 public class BeansConfig implements BeanDefinitionRegistryPostProcessor {
 
     @Bean(name = "record")
-    @ConditionalOnMissingBean(name = "record")
-    public Record record2() {
+    @ConditionalOnMissingBean(value = Record.class)
+    public Record record1() {
+        //record2();
         return new Record(119, "火警求救电话");
     }
+/*
+    @Bean
+    public Record record2() {
+        log.info("record2方法被调用!");
+        return new Record(119, "火警求救电话");
+    }*/
 
     /**
      * @Description: 将配置文件的属性加载到对象

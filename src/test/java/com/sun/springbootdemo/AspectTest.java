@@ -1,8 +1,10 @@
 package com.sun.springbootdemo;
 
-import com.sun.springbootdemo.config.CommonApi;
+import com.sun.springbootdemo.config.CommconProperty;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.UUID;
 
 /**
  * <p> 切面测试 </p>
@@ -13,11 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class AspectTest extends BaseJnuit5Test {
 
     @Autowired
-    private CommonApi commconProperty;
+    private CommconProperty commconProperty;
 
     @Test
     public void afterReturningTest() {
         String result = commconProperty.test2("Hello World");
+    }
+
+    @Test
+    public void uuidTest() {
+        System.out.println(UUID.randomUUID().toString());
     }
 
 

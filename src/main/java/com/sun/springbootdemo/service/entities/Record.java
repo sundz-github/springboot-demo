@@ -19,17 +19,18 @@ import java.io.Serializable;
 public class Record implements Serializable {
 
     private static final long serialVersionUID = 6805445227675049474L;
-    
+
     private long id;
 
     private String name;
 
 
     public Record() {
-        log.info("Record的<无>参构造!");
+        log.info("Record的<无>参构造被调用了!");
     }
 
     public Record(long id, String name) {
+        log.info("Record的<有>参构造被调用了!");
         this.id = id;
         this.name = name;
     }

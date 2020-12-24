@@ -41,8 +41,9 @@ public class BrowserApplicationController {
 
     @ApiOperation(value = "测试方法", notes = "test方法")
     @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public Result<String> test(HttpServletRequest request, HttpServletResponse response) {
+    public Result<String> test(HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "param") String t) {
         log.info("getRequestURL:" + request.getRequestURI());  //URL -->> http://localhost:8080/v1/test  URI -->> /v1/test
+        Map<String, String[]> parameterMap = request.getParameterMap();
         return new Result<>("");
     }
 

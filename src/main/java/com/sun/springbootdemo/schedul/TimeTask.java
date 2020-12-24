@@ -19,13 +19,13 @@ import java.util.concurrent.TimeUnit;
 @Async  // 异步调用  防止任务被阻塞
 public class TimeTask {
 
-    @Scheduled(cron = "0/5 * *  * * ? ")
+    @Scheduled(cron = "* 0/15 *  * * ? ")
     public void excute() throws InterruptedException {
         log.info("定时任务<excute>开始执行了 ==> thread{}:", Thread.currentThread().getName());
         TimeUnit.MILLISECONDS.sleep(10000);
     }
 
-    @Scheduled(cron = "0/5 * *  * * ? ")
+    @Scheduled(cron = "* 0/15 *  * * ? ")
     public void excute2() {
         log.info("定时任务开始执行了 ==> thread{}", Thread.currentThread().getName());
     }
