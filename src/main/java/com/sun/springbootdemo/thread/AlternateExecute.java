@@ -3,6 +3,10 @@ package com.sun.springbootdemo.thread;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Semaphore;
+
 /**
  * <p> 多个线程交替执行 == >> 线程间需要通信 </p>
  *
@@ -14,7 +18,10 @@ public class AlternateExecute {
 
 
     @Test
-    public void threadTest() throws Exception {
+    public void threadTest() {
+        CountDownLatch countDownLatch = new CountDownLatch(5);
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(5);
+        Semaphore semaphore = new Semaphore(2);
         Reset reset = new Reset();
         new Thread(() -> {
             for (int i = 0; i < 10; i++) {
