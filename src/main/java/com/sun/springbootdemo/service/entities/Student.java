@@ -20,6 +20,10 @@ import java.io.Serializable;
 @Data
 public class Student implements Condition, Serializable {
 
+    public Integer get(Student stu) {
+        return stu.getAge();
+    }
+
     private String name;
 
     private int age;

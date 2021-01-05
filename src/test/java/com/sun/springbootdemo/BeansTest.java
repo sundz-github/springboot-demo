@@ -32,6 +32,5 @@ public class BeansTest extends BaseJnuit5Test {
     public void test1() {
         CommonServer bean = context.getBean(CommonServer.class);
         RestTemplate build = restTemplateBuilder.build();
-
     }
 }

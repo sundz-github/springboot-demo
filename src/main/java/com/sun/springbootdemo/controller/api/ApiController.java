@@ -38,7 +38,7 @@ public interface ApiController {
             @ApiResponse(code = 203, message = "数据返回成功", examples = @Example(value = @ExampleProperty(value = "uid:sundz", mediaType = "application/json"))),
             @ApiResponse(code = 400, message = "请求错误")
     })
-    public List<Map<String, String>> getbody(@RequestBody List<Map<String, String>> param);
+    List<Map<String, String>> getbody(@RequestBody List<Map<String, String>> param);
 
-    public Pair<String, Object> pair(@RequestParam("param") String param);
+    Pair<String, Object> pair(@RequestParam("param") String param);
 }

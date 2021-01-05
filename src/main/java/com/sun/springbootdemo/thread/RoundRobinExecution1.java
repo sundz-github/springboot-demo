@@ -126,9 +126,8 @@ public class RoundRobinExecution1 {
                 }
                 // 字母C  则输出，同时需要唤醒线程D（也就是输出D的线程）
                 log.info(Thread.currentThread().getName() + "-->输出的字母为:{}", letter);
-                count = 4;  // 重置状态
-                conditionD.signal(); // 唤醒C线程
-
+                count = 1;  // 重置状态
+                conditionA.signal(); // 唤醒C线程
                 // C线程已完成
                 latch.countDown();
             } catch (Exception e) {
@@ -138,59 +137,28 @@ public class RoundRobinExecution1 {
             }
         }
 
-        /**
-         * 输出字母D
-         *
-         * @param letter 要输出的字母
-         * @return {@link String} 返回值
-         */
-        public void printD(String letter) {
-            lock.lock();
-            try {
-                // 只要不是字母D则等待
-                while (count != 4) {
-                    conditionC.await(); // 等待 交出CPU控制权
+        @Test
+        public void threadTest() throws Exception {
+            Letter letter = new Letter();
+            new Thread(() -> {
+                for (int i = 0; i < 3; i++) {
+                    letter.printA(alphabetArr[0]);
                 }
-                // 字母D  则输出，同时需要唤醒线程A（也就是输出D的线程）
-                log.info(Thread.currentThread().getName() + "-->输出的字母为:{}", letter);
-                count = 1;  // 重置状态
-                conditionA.signal(); // 唤醒A线程
-                // D线程已完成
-                latch.countDown();
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-            } finally {
-                lock.unlock();  // 必须在finally中释放锁  否则会引起死锁
-            }
+            }, "A").start();
+            new Thread(() -> {
+                for (int i = 0; i < 3; i++) {
+                    letter.printB(alphabetArr[1]);
+                }
+            }, "B").start();
+            new Thread(() -> {
+                for (int i = 0; i < 3; i++) {
+                    letter.printC(alphabetArr[2]);
+                }
+            }, "C").start();
+            //防止先主线程执行完
+            latch.await();
+            //TimeUnit.SECONDS.sleep(3);
         }
-    }
-
-    @Test
-    public void threadTest() throws Exception {
-        Letter letter = new Letter();
-        new Thread(() -> {
-            for (int i = 0; i < 3; i++) {
-                letter.printA(alphabetArr[0]);
-            }
-        }, "A").start();
-        new Thread(() -> {
-            for (int i = 0; i < 3; i++) {
-                letter.printB(alphabetArr[1]);
-            }
-        }, "B").start();
-        new Thread(() -> {
-            for (int i = 0; i < 3; i++) {
-                letter.printC(alphabetArr[2]);
-            }
-        }, "C").start();
-        new Thread(() -> {
-            for (int i = 0; i < 3; i++) {
-                letter.printD(alphabetArr[3]);
-            }
-        }, "D").start();
-        //防止先主线程执行完
-        latch.await();
-        //TimeUnit.SECONDS.sleep(3);
     }
 
 }
