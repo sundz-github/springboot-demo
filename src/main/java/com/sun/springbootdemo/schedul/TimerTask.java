@@ -16,17 +16,19 @@ import java.util.concurrent.TimeUnit;
  */
 @Log4j2
 @Component  // 需要交给spring ioc容器管理
-@Async  // 异步调用  防止任务被阻塞
-public class TimeTask {
+@Async(value = "executorService")  // 需要自定义线程池  否则就是单一线程(Executors.newSingleThreadExecutor())
+public class TimerTask {
 
-    @Scheduled(cron = "* 0/15 *  * * ? ")
+
+    @Scheduled(cron = "* 0/1 *  * * ? ")
     public void excute() throws InterruptedException {
-        log.info("定时任务<excute>开始执行了 ==> thread{}:", Thread.currentThread().getName());
-        TimeUnit.MILLISECONDS.sleep(10000);
+        log.info("定时任务<do1>开始执行了 ==> thread{}:", Thread.currentThread().getName());
+        TimeUnit.SECONDS.sleep(6);
+
     }
 
-    @Scheduled(cron = "* 0/15 *  * * ? ")
+    @Scheduled(cron = "* 0/1 *  * * ? ")
     public void excute2() {
-        log.info("定时任务开始执行了 ==> thread{}", Thread.currentThread().getName());
+        log.info("定时任务<do2>开始执行了 ==> thread{}:", Thread.currentThread().getName());
     }
 }

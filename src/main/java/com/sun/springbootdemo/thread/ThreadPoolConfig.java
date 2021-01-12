@@ -23,11 +23,11 @@ public class ThreadPoolConfig {
 
         //core-size:核心线程数  一般为CPU核数的2倍
         //queue：线程队列
-        //Max-size：最大线程数
+        //Max-size：最大线程数c
         //thread-factory: 线程工厂
         //refuse-plocy;拒绝策略
         //keep-alive：线程空闲时间
-        return new ThreadPoolExecutor(16, 20, 30, TimeUnit.SECONDS,
+        return new ThreadPoolExecutor(4, Runtime.getRuntime().availableProcessors(), 30, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(100), Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfigura
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -22,6 +23,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableCaching
 @EnableScheduling
 @EnableAsync
+@EnableRetry
 public class SpringbootdemoApplication {
 
 
@@ -32,7 +34,7 @@ public class SpringbootdemoApplication {
         //springApplication.addListeners(new SimpleDefinitionListen()); // -- >相当于向容器注册bean
         ConfigurableApplicationContext applicationContext = springApplication.run(args);
         applicationContext.publishEvent(new DefinitionEvent("我是定义事件!"));
-        log.info("<---------------SpringbootdemoApplication工程正在启动---------------o>");
+        log.info("<---------------SpringbootdemoApplication工程正在启动--------------->");
 
     }
 
