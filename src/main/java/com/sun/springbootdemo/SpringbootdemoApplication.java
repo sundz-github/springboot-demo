@@ -1,6 +1,7 @@
 package com.sun.springbootdemo;
 
 import com.sun.springbootdemo.web.DefinitionEvent;
+import com.sun.springbootdemo.web.DefinitionInitializer;
 import lombok.extern.log4j.Log4j2;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -30,7 +31,7 @@ public class SpringbootdemoApplication {
     public static void main(String[] args) {
 
         SpringApplication springApplication = new SpringApplication(SpringbootdemoApplication.class);
-        //springApplication.addInitializers(new DefinitionInitializer());
+        springApplication.addInitializers(new DefinitionInitializer());
         //springApplication.addListeners(new SimpleDefinitionListen()); // -- >相当于向容器注册bean
         ConfigurableApplicationContext applicationContext = springApplication.run(args);
         applicationContext.publishEvent(new DefinitionEvent("我是定义事件!"));

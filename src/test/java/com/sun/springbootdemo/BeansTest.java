@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.DispatcherServlet;
 
 /**
  * <p>  </p>
@@ -27,6 +28,9 @@ public class BeansTest extends BaseJnuit5Test {
 
     @Autowired
     private RestTemplateBuilder restTemplateBuilder;
+
+    @Autowired
+    private DispatcherServlet dispatcherServlet;
 
     @Test
     public void test1() {

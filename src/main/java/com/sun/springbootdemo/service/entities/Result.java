@@ -67,7 +67,21 @@ public class Result<T> implements Serializable {
             return this;
         }
 
-        public Builder<T> bodey(T body) {
+        public Builder<T> body(T body) {
+            this.body = body;
+            return this;
+        }
+
+        public Builder<T> success(T body) {
+            this.code = 200;
+            this.message = "数据返回成功!";
+            this.body = body;
+            return this;
+        }
+
+        public Builder<T> fail(T body) {
+            this.code = 406;
+            this.message = "数据返回失败!";
             this.body = body;
             return this;
         }

@@ -13,8 +13,14 @@ import org.springframework.context.ConfigurableApplicationContext;
 @Log4j2
 public class DefinitionInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
+    private ConfigurableApplicationContext context;
+
+    /**
+     * @field 用于初始化上下文
+     */
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
         log.info("<-------------------自定义初始化容器起作用了------------------->");
+        context = applicationContext;
     }
 }

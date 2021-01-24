@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.time.Duration;
+import java.time.OffsetDateTime;
 import java.util.Set;
 
 /**
@@ -31,5 +33,11 @@ public class RedisTest extends BaseJnuit5Test {
         log.info("diff:{}", diff);
 
     }
+
+    @Test
+    public void test() {
+        System.out.println(OffsetDateTime.now().plus(Duration.ofHours(2)));
+    }
+
 
 }
