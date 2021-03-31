@@ -3,10 +3,13 @@ package com.sun.springbootdemo;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.lang.reflect.Method;
 
 /**
  * <p> 测试基类 </p>
@@ -30,5 +33,11 @@ public class BaseJnuit5Test {
         log.info("<---------------------方法执行结束--------------------->");
     }
 
+    @Test
+    public void reflectTest() throws Exception {
+        Rollback rollback = BaseJnuit5Test.class.getAnnotation(Rollback.class);
+        Method method = BaseJnuit5Test.class.getDeclaredMethod("reflectTest");
+        Test annotation = method.getAnnotation(Test.class);
+    }
 
 }

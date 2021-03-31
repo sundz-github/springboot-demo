@@ -1,0 +1,3 @@
+para:
+  scheduled:
+    crons: 0 0 10 * * MON,0 0 12 * * MON

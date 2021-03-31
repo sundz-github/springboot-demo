@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,15 +28,18 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = -3493729785479686616L;
 
+    private long id;
+
     private String username;
 
     private int age;
 
-    private Record record;
+    private Date date;
+
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(User.class).add("username", username).add("age", age).add("record", record).toString();
+        return MoreObjects.toStringHelper(User.class).add("username", username).add("age", age).toString();
     }
 
 
@@ -54,7 +58,6 @@ public class User implements Serializable {
         User user = new User();
         user.setUsername("小明");
         user.setAge(18);
-        user.setRecord(record);
         userMap.put("user", user);
         return userMap;
     }

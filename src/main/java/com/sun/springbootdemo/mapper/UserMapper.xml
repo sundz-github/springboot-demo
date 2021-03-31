@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun.springbootdemo.mapper.UserMapper">
+    <resultMap id="userBaseResult" type="com.sun.springbootdemo.service.entities.User">
+        <id property="id" jdbcType="BIGINT" column="user_id"/>
+        <id property="username" jdbcType="VARBINARY" column="user_name"/>
+        <id property="age" jdbcType="INTEGER" column="user_age"/>
+        <id property="date" jdbcType="BIGINT" column="update_time"/>
+    </resultMap>
+
+
+    <select id="selectAll" resultMap="userBaseResult">
+
+              SELECT * from pr_user
+
+    </select>
+</mapper>

@@ -1,9 +1,11 @@
 package com.sun.springbootdemo.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.sun.springbootdemo.service.entities.Person;
 import com.sun.springbootdemo.service.entities.Pet;
+import com.sun.springbootdemo.service.entities.Record;
 import com.sun.springbootdemo.service.entities.Result;
 import com.sun.springbootdemo.service.exceptions.EntitiesException;
 import io.swagger.annotations.Api;
@@ -11,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -38,6 +41,9 @@ import java.util.Objects;
 @Api(value = "Controller控制器", tags = {"BrowserApplicationController"})
 @RequestMapping(value = "/v1")
 public class BrowserApplicationController {
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @ApiOperation(value = "测试方法", notes = "test方法")
     @RequestMapping(value = "/test", method = RequestMethod.POST)
@@ -98,6 +104,14 @@ public class BrowserApplicationController {
     @GetMapping(value = "/query")
     public Map<String, Object> query(@RequestParam(value = "parameter1", defaultValue = "Hello World") String parameter1, @ApiIgnore String parameter2) {
         return ImmutableMap.of("parameter1", parameter1, "parameter2", StringUtils.defaultIfBlank(parameter2, "parameter2"));
+    }
+
+    @GetMapping(value = "records")
+    public Result<Record> record(@RequestBody Record record) throws Exception {
+        String s = objectMapper.writeValueAsString(record);
+        Map r = objectMapper.readValue(s, Map.class);
+        Object uuid = r.get("uuid");
+        return new Result.Builder<Record>().success(record).build();
     }
 
 }

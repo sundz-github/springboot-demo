@@ -1,6 +1,8 @@
 package com.sun.springbootdemo.web;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -21,6 +23,9 @@ import java.util.Enumeration;
 public class CustomizeWebFilter implements Filter {
 
     private FilterConfig filterConfig;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * @field: Spring中指读取web.xml相关配置，主要设置过滤器相关信息

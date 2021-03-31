@@ -4,10 +4,9 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.time.Duration;
-import java.time.OffsetDateTime;
 import java.util.Set;
 
 /**
@@ -21,6 +20,9 @@ public class RedisTest extends BaseJnuit5Test {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private LettuceConnectionFactory lettuceConnectionFactory;
 
     @Test
     @DisplayName("Redis-String类型测试")
@@ -36,7 +38,8 @@ public class RedisTest extends BaseJnuit5Test {
 
     @Test
     public void test() {
-        System.out.println(OffsetDateTime.now().plus(Duration.ofHours(2)));
+        
+
     }
 
 

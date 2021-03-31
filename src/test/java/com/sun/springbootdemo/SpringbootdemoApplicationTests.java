@@ -4,14 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.CacheLoader;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.sun.springbootdemo.config.BeansConfig;
 import com.sun.springbootdemo.config.CommconProperty;
-import com.sun.springbootdemo.mapper.EntitiesConfigMapper;
+import com.sun.springbootdemo.mapper.UserMapper;
 import com.sun.springbootdemo.mybatis.config.DataSourceConfig;
 import com.sun.springbootdemo.service.CommonBusiniessService;
-import com.sun.springbootdemo.service.TestService;
 import com.sun.springbootdemo.service.entities.Animals;
 import com.sun.springbootdemo.service.entities.Eagle;
 import com.sun.springbootdemo.service.entities.Mailbox;
@@ -44,7 +41,6 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 
 @Log4j2
@@ -93,7 +89,7 @@ public class SpringbootdemoApplicationTests extends BaseJnuit5Test {
     private DataSource dataSource;
 
     @Autowired
-    private EntitiesConfigMapper entitiesConfigMapper;
+    private UserMapper entitiesConfigMapper;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -103,9 +99,6 @@ public class SpringbootdemoApplicationTests extends BaseJnuit5Test {
 
     @Autowired
     private CommonBusiniessService commonBusiniessService;
-
-    @Autowired
-    private TestService testService;
 
     @Autowired
     private Student student;
@@ -212,21 +205,6 @@ public class SpringbootdemoApplicationTests extends BaseJnuit5Test {
         CaffeineCache caffeineCache = new CaffeineCache("sundz", cache);
     }
 
-    @Test
-    public void selectAllTest() {
-        PageHelper.startPage(1, 2, true);
-        List<Map<String, Object>> data = entitiesConfigMapper.findAll();
-        PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(data);
-        List<Map<String, Object>> pageData = pageInfo.getList();
-        System.out.println(pageData);
-    }
-
-    @Test
-    public void selectOneTest() {
-        String userId = "21";
-        String city = entitiesConfigMapper.selectOne(userId);
-        log.info("city:" + city);
-    }
 
     @Test
     public void BeanCopierTest() {
@@ -239,7 +217,6 @@ public class SpringbootdemoApplicationTests extends BaseJnuit5Test {
 
     @Test
     public void cacheTest() {
-        testService.test();
         ThreadLocal<String> threadLocal = new ThreadLocal<>();
 
 

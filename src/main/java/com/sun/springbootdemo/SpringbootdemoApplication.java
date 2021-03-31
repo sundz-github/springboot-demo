@@ -3,7 +3,9 @@ package com.sun.springbootdemo;
 import com.sun.springbootdemo.web.DefinitionEvent;
 import com.sun.springbootdemo.web.DefinitionInitializer;
 import lombok.extern.log4j.Log4j2;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
@@ -26,6 +28,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableAsync
 @EnableRetry
 public class SpringbootdemoApplication {
+
+    @Autowired
+    private SqlSessionTemplate sqlSessionTemplate;
 
 
     public static void main(String[] args) {

@@ -22,6 +22,12 @@
     </properties>
 
     <dependencies>
+        <!-- redission分布式锁相关 -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.6.5</version>
+        </dependency>
         <!--spring-retry重试机制-->
         <dependency>
             <groupId>org.springframework.retry</groupId>

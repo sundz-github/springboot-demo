@@ -1,5 +1,6 @@
 package com.sun.springbootdemo.service.entities;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.google.common.base.MoreObjects;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
@@ -20,6 +21,7 @@ public class Record implements Serializable {
 
     private static final long serialVersionUID = 6805445227675049474L;
 
+    @JsonAlias(value = {"id", "uuid"})
     private long id;
 
     private String name;

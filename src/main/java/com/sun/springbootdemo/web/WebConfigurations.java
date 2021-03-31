@@ -54,7 +54,7 @@ public class WebConfigurations {
         FilterRegistrationBean<CustomizeWebFilter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new CustomizeWebFilter());
         // 针对test请求做特殊处理
-        filterRegistrationBean.addUrlPatterns("/test");
+        filterRegistrationBean.addUrlPatterns("/*");
         filterRegistrationBean.addInitParameter("url", "/test");
         // 添加自定义参数 -->> Map集合  filterRegistrationBean.setInitParameters()
         EnumSet<DispatcherType> dispatcherTypesEnum = EnumSet.allOf(DispatcherType.class);

@@ -4,8 +4,6 @@ import com.google.common.base.CharMatcher;
 import com.sun.springbootdemo.config.CommconProperty;
 import com.sun.springbootdemo.config.ConfigProperty;
 import com.sun.springbootdemo.service.MockInterface;
-import com.sun.springbootdemo.service.TR;
-import com.sun.springbootdemo.service.TestService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -27,12 +25,6 @@ public class MockTest extends BaseJnuit5Test {
 
     @MockBean
     private MockInterface mockInterface;
-
-    @MockBean
-    private TestService testService;
-
-    @Autowired
-    private TR tr;
 
     @Autowired
     private CommconProperty commconProperty;
