@@ -38,8 +38,8 @@ public class RedisTest extends BaseJnuit5Test {
 
     @Test
     public void test() {
-        
-
+        Object test = redisTemplate.opsForValue().get("test");
+        System.out.println(test);
     }
 
 

@@ -25,7 +25,6 @@ public class dbTest extends BaseJnuit5Test {
 
     @Test
     public void userSelect() {
-
         List<User> users = userMapper.selectAll();
         users.forEach(System.out::println);
     }

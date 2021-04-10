@@ -62,6 +62,8 @@ public class RedisConfig {
         RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
         redisConfig.setHostName(host);
         redisConfig.setPort(6379);
+        // 设置分区
+        redisConfig.setDatabase(0);
         if (password != null && !"".equals(password)) {
             redisConfig.setPassword(password);
         }
@@ -70,7 +72,7 @@ public class RedisConfig {
         // RedisSentinelConfiguration redisConfig = new RedisSentinelConfiguration();
 
         // 集群redis  -->> 需要开启集群功能，默认没有开启cluster-enabled yes，
-        /*RedisClusterConfiguration redisConfig = new RedisClusterConfiguration();
+       /* RedisClusterConfiguration redisConfig = new RedisClusterConfiguration();
         Set<RedisNode> nodeses = new HashSet<>();
         String[] hostses = nodes.split("-");
         for (String h : hostses) {
