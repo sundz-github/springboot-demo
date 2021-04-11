@@ -1,6 +1,6 @@
 package com.sun.springbootdemo.retry;
 
-import com.sun.springbootdemo.service.entities.Result;
+import com.sun.springbootdemo.entities.Result;
 import org.springframework.retry.annotation.Recover;
 
 /**

@@ -1,6 +1,6 @@
 package com.sun.springbootdemo.config;
 
-import com.sun.springbootdemo.service.entities.Record;
+import com.sun.springbootdemo.entities.Record;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;

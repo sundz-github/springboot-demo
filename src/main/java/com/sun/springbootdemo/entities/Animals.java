@@ -1,4 +1,4 @@
-package com.sun.springbootdemo.service.entities;
+package com.sun.springbootdemo.entities;
 
 /**
  * @Description:

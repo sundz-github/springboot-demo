@@ -1,6 +1,6 @@
 package com.sun.springbootdemo.retry;
 
-import com.sun.springbootdemo.service.entities.Result;
+import com.sun.springbootdemo.entities.Result;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;

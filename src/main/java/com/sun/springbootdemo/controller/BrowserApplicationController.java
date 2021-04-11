@@ -3,10 +3,10 @@ package com.sun.springbootdemo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
-import com.sun.springbootdemo.service.entities.Person;
-import com.sun.springbootdemo.service.entities.Pet;
-import com.sun.springbootdemo.service.entities.Record;
-import com.sun.springbootdemo.service.entities.Result;
+import com.sun.springbootdemo.entities.Person;
+import com.sun.springbootdemo.entities.Pet;
+import com.sun.springbootdemo.entities.Record;
+import com.sun.springbootdemo.entities.Result;
 import com.sun.springbootdemo.service.exceptions.EntitiesException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

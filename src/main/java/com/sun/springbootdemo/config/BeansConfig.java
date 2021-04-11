@@ -1,8 +1,8 @@
 package com.sun.springbootdemo.config;
 
 
-import com.sun.springbootdemo.service.entities.Record;
-import com.sun.springbootdemo.service.entities.Student;
+import com.sun.springbootdemo.entities.Record;
+import com.sun.springbootdemo.entities.Student;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;

@@ -1,4 +1,4 @@
-package com.sun.springbootdemo.service.entities;
+package com.sun.springbootdemo.entities;
 
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;

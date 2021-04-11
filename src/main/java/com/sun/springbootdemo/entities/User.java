@@ -1,10 +1,11 @@
-package com.sun.springbootdemo.service.entities;
+package com.sun.springbootdemo.entities;
 
-import com.google.common.base.MoreObjects;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -28,19 +29,20 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = -3493729785479686616L;
 
-    private long id;
+    private Long id;
 
     private String username;
 
-    private int age;
+    private Integer age;
 
+    private Integer role;
+
+    private String password;
+
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //设置接收日期参数时的格式
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date date;
-
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(User.class).add("username", username).add("age", age).toString();
-    }
 
 
     /**
@@ -48,7 +50,7 @@ public class User implements Serializable {
      * @Description: 数据模型  -->  获取User集合对象
      * @Date 2020/6/17 11:20
      * @Param []
-     * @Return java.util.Map<java.lang.String, com.sun.springbootdemo.service.entities.User>
+     * @Return java.util.Map<java.lang.String, com.sun.springbootdemo.entities.User>
      **/
     public Map<String, User> generateUserMap() {
         Map<String, User> userMap = new HashMap<>();
@@ -62,5 +64,5 @@ public class User implements Serializable {
         return userMap;
     }
 
-
 }
+

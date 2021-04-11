@@ -1,12 +1,10 @@
 package com.sun.springbootdemo;
 
+import com.sun.springbootdemo.entities.User;
 import com.sun.springbootdemo.mapper.UserMapper;
-import com.sun.springbootdemo.service.entities.User;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 /**
  * <p>  </p>
@@ -25,7 +23,9 @@ public class dbTest extends BaseJnuit5Test {
 
     @Test
     public void userSelect() {
-        List<User> users = userMapper.selectAll();
-        users.forEach(System.out::println);
+        /*List<User> users = userMapper.selectAll();
+        users.forEach(System.out::println);*/
+        User user = userMapper.selectOne("李钊");
+        System.out.println("user->>" + user);
     }
 }

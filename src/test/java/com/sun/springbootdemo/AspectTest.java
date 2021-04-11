@@ -1,7 +1,7 @@
 package com.sun.springbootdemo;
 
 import com.sun.springbootdemo.config.CommconProperty;
-import com.sun.springbootdemo.service.entities.Student;
+import com.sun.springbootdemo.entities.Student;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

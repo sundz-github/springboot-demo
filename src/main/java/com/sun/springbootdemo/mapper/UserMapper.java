@@ -1,6 +1,7 @@
 package com.sun.springbootdemo.mapper;
 
-import com.sun.springbootdemo.service.entities.User;
+import com.sun.springbootdemo.entities.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.List;
 public interface UserMapper {
 
     List<User> selectAll();
+
+    User selectOne(@Param("userName") String userName);
+
 
     //void insert(User user);
 

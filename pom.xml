@@ -18,10 +18,14 @@
         <!--解决SpringBoot默认使用@定界符的原因-->
         <resource.delimiter>${}</resource.delimiter>
         <username>root</username>
-        <password>Parav1ew@</password>
+        <password>Sundz09081419</password>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <!-- redission分布式锁相关 -->
         <dependency>
             <groupId>org.redisson</groupId>

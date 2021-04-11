@@ -29,6 +29,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableRetry
 public class SpringbootdemoApplication {
 
+
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 

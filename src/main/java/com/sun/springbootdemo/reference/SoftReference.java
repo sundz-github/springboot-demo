@@ -1,6 +1,6 @@
 package com.sun.springbootdemo.reference;
 
-import com.sun.springbootdemo.service.entities.Person;
+import com.sun.springbootdemo.entities.Person;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 

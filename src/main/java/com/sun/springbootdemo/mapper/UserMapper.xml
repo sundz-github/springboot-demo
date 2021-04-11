@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sun.springbootdemo.mapper.UserMapper">
-    <resultMap id="userBaseResult" type="com.sun.springbootdemo.service.entities.User">
+    <resultMap id="UserBaseResultMap" type="com.sun.springbootdemo.entities.User">
         <id property="id" jdbcType="BIGINT" column="user_id"/>
-        <id property="username" jdbcType="VARBINARY" column="user_name"/>
+        <id property="username" jdbcType="VARCHAR" column="user_name"/>
         <id property="age" jdbcType="INTEGER" column="user_age"/>
-        <id property="date" jdbcType="BIGINT" column="update_time"/>
+        <id property="password" jdbcType="VARCHAR" column="user_password"/>
+        <id property="role" jdbcType="INTEGER" column="user_role"/>
+        <id property="date" jdbcType="TIMESTAMP" column="update_time"/>
     </resultMap>
 
 
-    <select id="selectAll" resultMap="userBaseResult">
-
-              SELECT * from pr_user
-
+    <select id="selectAll" resultMap="UserBaseResultMap">
+         SELECT * from pr_user;
+    </select>
+    <select id="selectOne" parameterType="java.lang.String" resultMap="UserBaseResultMap">
+         SELECT * from pr_user where user_name = #{userName, jdbcType = VARCHAR};
     </select>
 </mapper>

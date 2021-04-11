@@ -1,7 +1,7 @@
 package com.sun.springbootdemo.service;
 
-import com.sun.springbootdemo.service.entities.Person;
-import com.sun.springbootdemo.service.entities.Result;
+import com.sun.springbootdemo.entities.Person;
+import com.sun.springbootdemo.entities.Result;
 import com.sun.springbootdemo.service.exceptions.EntitiesException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
