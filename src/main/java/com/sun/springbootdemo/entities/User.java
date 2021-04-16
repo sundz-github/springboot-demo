@@ -1,11 +1,9 @@
 package com.sun.springbootdemo.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -40,8 +38,8 @@ public class User implements Serializable {
     private String password;
 
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //设置接收日期参数时的格式
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    /* @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //设置接收日期参数时的格式
+     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")*/
     private Date date;
 
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +28,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // 授权供给者
         auth.userDetailsService(customUserDetailsService);
         /*Collection<GrantedAuthority> authorities = new ArrayList<>();
         // 角色
@@ -45,13 +47,13 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
     /**
      * @field 授权  -- > 你可以做什么？有什么权限？
      */
-    /*@Override
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 默认可以访问没有设置权限的接口
         http.authorizeRequests()
                 // 根路径都可以看到所有
                 .antMatchers("/").permitAll()
-                // admin路劲下能admin用户能看到的s
+                /*// admin路劲下能admin用户能看到的s
                 .antMatchers("/admin/**")
                 .hasRole("admin")
                 // normal路劲下能normal用户能看到的
@@ -59,9 +61,10 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .hasRole("normal")
                 // 任何请求都需要认证
                 .anyRequest()
-                .authenticated()
+                .authenticated()*/
                 .and().formLogin();
-    }*/
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

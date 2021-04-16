@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -18,7 +19,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Log4j2
-@SpringBootApplication(exclude = {FreeMarkerAutoConfiguration.class})
+@SpringBootApplication(exclude = {FreeMarkerAutoConfiguration.class, SecurityAutoConfiguration.class})
 @MapperScan("com.sun.springbootdemo.mapper")
 @EnableSwagger2
 //需要制定监听器扫描路径
