@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun.springbootdemo.mapper.RoleMapper">
+    <resultMap id="RoleBaseResultMap" type="com.sun.springbootdemo.entities.Role">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <id column="name" jdbcType="VARCHAR" property="name"/>
+        <id column="grade" jdbcType="INTEGER" property="grade"/>
+    </resultMap>
+
+    <sql id="columns">
+        id,name,grade
+    </sql>
+    <select id="selectOne" parameterType="long" resultMap="RoleBaseResultMap">
+        select
+        <include refid="columns"/>
+        from pr_role where id=#{id, jdbcType = BIGINT}
+    </select>
+    <select id="selectAll" resultMap="RoleBaseResultMap">
+        select
+        <include refid="columns"/>
+        from pr_role where id=#{id, jdbcType = BIGINT}
+    </select>
+
+
+</mapper>

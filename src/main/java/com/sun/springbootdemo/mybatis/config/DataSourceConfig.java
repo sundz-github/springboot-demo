@@ -13,6 +13,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -134,6 +136,9 @@ public class DataSourceConfig {
     ) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
+        ResourcePatternResolver patternResolver = new PathMatchingResourcePatternResolver();
+        bean.setMapperLocations(patternResolver.getResources("classpath:mapper/*.xml"));
+        //bean.setConfigLocation(patternResolver.getResource("classpath:mapper/mybatis-config.xml"));  //配置文件中配置了mybatis的相关配置后，就不能再一次通过xml配置
         // 加载Mybatis的配置
         bean.setConfiguration(configuration);
         bean.setPlugins(new MybatisIntercepter());
@@ -151,6 +156,10 @@ public class DataSourceConfig {
     @Bean("sessionFactorySlave")
     public SqlSessionFactory sessionFactorySlave(@Autowired @Qualifier("dataSourceSlave") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        // classpath:com/sun/springbootdemo/mapper/mybatis-config.xml
+        ResourcePatternResolver patternResolver = new PathMatchingResourcePatternResolver();
+        bean.setMapperLocations(patternResolver.getResources("classpath:mapper/*.xml"));
+        //bean.setConfigLocation(patternResolver.getResource("classpath:mapper/mybatis-config.xml"));
         bean.setDataSource(dataSource);
         bean.setPlugins(new MybatisIntercepter());
         return bean.getObject();

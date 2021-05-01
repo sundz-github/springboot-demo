@@ -6,15 +6,17 @@
         <id property="username" jdbcType="VARCHAR" column="user_name"/>
         <id property="age" jdbcType="INTEGER" column="user_age"/>
         <id property="password" jdbcType="VARCHAR" column="user_password"/>
-        <id property="role" jdbcType="INTEGER" column="user_role"/>
         <id property="date" jdbcType="TIMESTAMP" column="update_time"/>
+        <!--        <association property="role" javaType="com.sun.springbootdemo.entities.Role" column="role_id"-->
+        <!--                     select="com.sun.springbootdemo.mapper.RoleMapper.selectOne"/>-->
+        <collection property="role" column="role_id" select="com.sun.springbootdemo.mapper.RoleMapper.selectAll"/>
     </resultMap>
 
 
     <select id="selectAll" resultMap="UserBaseResultMap">
          SELECT * from pr_user;
     </select>
-    <select id="selectOne" parameterType="java.lang.String" resultMap="UserBaseResultMap">
+    <select id="selectOne" parameterType="string" resultMap="UserBaseResultMap">
          SELECT * from pr_user where user_name = #{userName, jdbcType = VARCHAR};
     </select>
 </mapper>

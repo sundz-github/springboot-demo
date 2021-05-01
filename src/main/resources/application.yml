@@ -1,19 +1,19 @@
-para:
-  scheduled:
-    crons: 0 0 10 * * MON,0 0 12 * * MON
-spring:
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    defaultPropertyInclusion: NON_EMPTY
-    deserialization:
-      fail_on_unknown_properties: false
-    parser:
-      allow_single_quotes: true
-      allow_unquoted_control_chars: true
-    serialization:
-      fail_on_empty_beans: false
-      indent_output: true
-      write-dates-as-timestamps: false
-    time-zone: GMT+8
-  mvc:
-    date-format: yyyy-MM-dd HH:mm:ss
+#para:
+#  scheduled:
+#    crons: 0 0 10 * * MON,0 0 12 * * MON
+#spring:
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    defaultPropertyInclusion: NON_EMPTY
+#    deserialization:
+#      fail_on_unknown_properties: false
+#    parser:
+#      allow_single_quotes: true
+#      allow_unquoted_control_chars: true
+#    serialization:
+#      fail_on_empty_beans: false
+#      indent_output: true
+#      write-dates-as-timestamps: false
+#    time-zone: GMT+8
+#  mvc:
+#    date-format: yyyy-MM-dd HH:mm:ss

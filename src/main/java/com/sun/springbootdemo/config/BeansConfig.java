@@ -37,12 +37,6 @@ public class BeansConfig implements BeanDefinitionRegistryPostProcessor {
         //record2();
         return new Record(119, "火警求救电话");
     }
-/*
-    @Bean
-    public Record record2() {
-        log.info("record2方法被调用!");
-        return new Record(119, "火警求救电话");
-    }*/
 
     /**
      * @Description: 将配置文件的属性加载到对象
@@ -57,6 +51,7 @@ public class BeansConfig implements BeanDefinitionRegistryPostProcessor {
         // 将指定配置文件加载到Configuration对象
         return new PropertiesConfiguration("common.properties");
     }
+
 
     /**
      * 动态向Spring注入bean
@@ -81,4 +76,18 @@ public class BeansConfig implements BeanDefinitionRegistryPostProcessor {
         BeanDefinition stuBeanDefinition = beanFactory.getBeanDefinition("student");
         stuBeanDefinition.getPropertyValues().add("name", "夏侯惇").add("age", 30);
     }
+
+
+    /*@ConditionalOnMissingBean
+    @Bean
+    public City citys() {
+        log.info("ConditionalOnMissingBean -> City对象已初始化!");
+        return new City();
+    }
+
+    @Bean
+    public City city() {
+        log.info("City对象已初始化!");
+        return new City();
+    }*/
 }

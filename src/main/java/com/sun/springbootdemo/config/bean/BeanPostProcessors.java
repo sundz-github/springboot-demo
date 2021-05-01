@@ -1,4 +1,4 @@
-package com.sun.springbootdemo.config;
+package com.sun.springbootdemo.config.bean;
 
 import com.sun.springbootdemo.entities.Record;
 import lombok.extern.log4j.Log4j2;
@@ -17,6 +17,9 @@ import org.springframework.context.annotation.Configuration;
 @Log4j2
 public class BeanPostProcessors implements BeanPostProcessor {
 
+    /**
+     * @field 创建对象  -->  postProcessBeforeInitialization -->> 实例化对象(@PostConstruct)  -->  postProcessAfterInitialization
+     */
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof Record) {
@@ -27,13 +30,12 @@ public class BeanPostProcessors implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        /*if ("record1".equalsIgnoreCase(beanName)) {
+        if ("record1".equalsIgnoreCase(beanName)) {
             Record r = (Record) bean;
             r.setId(521);
             r.setName("我是521");
             System.out.println("BeanPostProcessor的<后>置处理器执行了--->>  " + r);
-        }*/
-
+        }
         return bean;
     }
 }

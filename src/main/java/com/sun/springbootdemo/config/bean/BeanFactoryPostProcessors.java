@@ -1,4 +1,4 @@
-package com.sun.springbootdemo.config;
+package com.sun.springbootdemo.config.bean;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeansException;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Log4j2
 public class BeanFactoryPostProcessors implements BeanFactoryPostProcessor {
-    
+
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {

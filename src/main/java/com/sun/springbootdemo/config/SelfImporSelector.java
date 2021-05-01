@@ -1,5 +1,6 @@
 package com.sun.springbootdemo.config;
 
+import com.sun.springbootdemo.entities.Student;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
 
@@ -12,6 +13,6 @@ import org.springframework.core.type.AnnotationMetadata;
 public class SelfImporSelector implements ImportSelector {
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-        return new String[]{CommonServer.class.getName()};
+        return new String[]{Student.class.getName()};
     }
 }

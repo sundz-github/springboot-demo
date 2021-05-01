@@ -1,10 +1,11 @@
 package com.sun.springbootdemo;
 
 import com.sun.springbootdemo.entities.User;
+import com.sun.springbootdemo.mapper.RoleMapper;
 import com.sun.springbootdemo.mapper.UserMapper;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
 
 /**
  * <p>  </p>
@@ -14,11 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class dbTest extends BaseJnuit5Test {
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
-    @Autowired
-    private SqlSessionFactory sessionFactory;
+    @Resource
+    private RoleMapper roleMapper;
 
 
     @Test
@@ -27,5 +28,6 @@ public class dbTest extends BaseJnuit5Test {
         users.forEach(System.out::println);*/
         User user = userMapper.selectOne("李钊");
         System.out.println("user->>" + user);
+        //Role role = roleMapper.selectOne(1L);
     }
 }

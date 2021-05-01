@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,9 +34,9 @@ public class User implements Serializable {
 
     private Integer age;
 
-    private Integer role;
-
     private String password;
+
+    private List<Role> role;
 
 
     /* @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //设置接收日期参数时的格式

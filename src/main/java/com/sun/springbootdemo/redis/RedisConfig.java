@@ -50,7 +50,7 @@ public class RedisConfig {
     @Bean
     LettuceConnectionFactory lettuceConnectionFactory() {
         // 连接池配置
-        GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+        GenericObjectPoolConfig<Object> poolConfig = new GenericObjectPoolConfig<>();
         poolConfig.setMaxIdle(maxIdle == null ? 8 : maxIdle);
         poolConfig.setMinIdle(minIdle == null ? 1 : minIdle);
         poolConfig.setMaxTotal(maxTotal == null ? 8 : maxTotal);
