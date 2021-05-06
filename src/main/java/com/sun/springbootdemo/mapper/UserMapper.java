@@ -17,4 +17,10 @@ public interface UserMapper {
 
     User selectOne(@Param("userName") String userName);
 
+    int update(Integer id, String name);
+
+    int deleteById(@Param("id") Integer id);
+
+    int insert(User user);
+
 }

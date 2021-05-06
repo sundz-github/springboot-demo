@@ -16,4 +16,8 @@ public interface RoleMapper {
     Role selectOne(@Param("id") Long id);
 
     List<Role> selectAll(@Param("id") Long id);
+
+    int insert(@Param("role") Role role);
+
+    int deleteById(@Param("id") Integer id);
 }

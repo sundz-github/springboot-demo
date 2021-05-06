@@ -10,11 +10,21 @@
     <sql id="columns">
         id,name,grade
     </sql>
+
+    <insert id="insert" parameterType="com.sun.springbootdemo.entities.Role">
+        insert pr_role(name, grade) values (#{role.name, jdbcType = VARCHAR}, #{role.grade, jdbcType =INTEGER});
+    </insert>
+
+    <delete id="deleteById">
+        delete from pr_role where id =#{id}
+    </delete>
+
     <select id="selectOne" parameterType="long" resultMap="RoleBaseResultMap">
         select
         <include refid="columns"/>
         from pr_role where id=#{id, jdbcType = BIGINT}
     </select>
+
     <select id="selectAll" resultMap="RoleBaseResultMap">
         select
         <include refid="columns"/>

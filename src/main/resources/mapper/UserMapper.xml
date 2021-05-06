@@ -3,14 +3,27 @@
 <mapper namespace="com.sun.springbootdemo.mapper.UserMapper">
     <resultMap id="UserBaseResultMap" type="com.sun.springbootdemo.entities.User">
         <id property="id" jdbcType="BIGINT" column="user_id"/>
-        <id property="username" jdbcType="VARCHAR" column="user_name"/>
+        <id property="userName" jdbcType="VARCHAR" column="user_name"/>
         <id property="age" jdbcType="INTEGER" column="user_age"/>
-        <id property="password" jdbcType="VARCHAR" column="user_password"/>
+        <id property="passWord" jdbcType="VARCHAR" column="user_password"/>
         <id property="date" jdbcType="TIMESTAMP" column="update_time"/>
+        <id property="roleEnum" javaType="com.sun.springbootdemo.entities.RoleEnum" column="role_id"
+            typeHandler="com.sun.springbootdemo.mybatis.EnumTypeBaseHandle"/>
         <!--        <association property="role" javaType="com.sun.springbootdemo.entities.Role" column="role_id"-->
         <!--                     select="com.sun.springbootdemo.mapper.RoleMapper.selectOne"/>-->
-        <collection property="role" column="role_id" select="com.sun.springbootdemo.mapper.RoleMapper.selectAll"/>
+        <!--<collection property="role" column="role_id" select="com.sun.springbootdemo.mapper.RoleMapper.selectAll"/>-->
     </resultMap>
+    <insert id="insert">
+        insert into pr_user(user_name, user_age, user_password, role_id)values(#{userName}, #{age}, #{passWord}, #{roleEnum, typeHandler=com.sun.springbootdemo.mybatis.EnumTypeBaseHandle})
+    </insert>
+
+    <update id="update">
+        update pr_user set user_name = #{param2} where user_id = #{param1}
+    </update>
+
+    <delete id="deleteById">
+        delete from pr_user where user_id = #{id}
+    </delete>
 
 
     <select id="selectAll" resultMap="UserBaseResultMap">

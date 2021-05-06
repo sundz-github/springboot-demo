@@ -1,6 +1,6 @@
 package com.sun.springbootdemo.security;
 
-import com.sun.springbootdemo.entities.Role;
+import com.sun.springbootdemo.entities.RoleEnum;
 import com.sun.springbootdemo.entities.User;
 import com.sun.springbootdemo.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * <p> 从数据库获取权限 </p>
@@ -37,11 +36,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userMapper.selectOne(username);
-        List<Role> role = user.getRole();
-        Long id = role.get(0).getId();
+        RoleEnum role = user.getRoleEnum();
+        int order = role.getOrder();
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         String roleStr;
-        if (null != id && id == 0) {
+        if (order == 0) {
             roleStr = PRE_AUTHENTICATE_ROLE + "ADMIN";
             // 管理员授权普通用户的操作
             authorities.add(new SimpleGrantedAuthority(PRE_AUTHENTICATE_ROLE + "NORMAL"));
@@ -49,7 +48,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             roleStr = PRE_AUTHENTICATE_ROLE + "NORMAL";
         }
         authorities.add(new SimpleGrantedAuthority(roleStr));
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(), passwordEncoder.encode(user.getPassword()), authorities);
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUserName(), passwordEncoder.encode(user.getPassWord()), authorities);
         return userDetails;
     }
 

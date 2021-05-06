@@ -1,37 +1,30 @@
 package com.sun.springbootdemo.entities;
 
+import com.sun.springbootdemo.mybatis.EnumTypeHandle;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * <p>  </p>
  *
  * @author Sundz
  * @date 2021/4/11 10:00
  */
+@Getter
+@AllArgsConstructor
+public enum RoleEnum implements EnumTypeHandle {
 
-public enum RoleEnum {
     NORMAL(1, "normal"),
+
     ADMINSTRATION(0, "administrator");
+
     private int order;
+
     private String role;
 
-    RoleEnum(int order, String role) {
-        this.order = order;
-        this.role = role;
-    }
-
-    public int getOrder() {
-        return order;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    @Override
+    public int order() {
+        return getOrder();
     }
 }
 
