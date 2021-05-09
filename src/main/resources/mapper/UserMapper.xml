@@ -18,7 +18,11 @@
     </insert>
 
     <update id="update">
-        update pr_user set user_name = #{param2} where user_id = #{param1}
+        update pr_user set user_name = #{param2}) where user_id = #{param1}
+    </update>
+
+    <update id="updateRole">
+        update pr_user set role_id = #{roleEnum, typeHandler=com.sun.springbootdemo.mybatis.EnumTypeBaseHandle} where user_id = #{param1}
     </update>
 
     <delete id="deleteById">

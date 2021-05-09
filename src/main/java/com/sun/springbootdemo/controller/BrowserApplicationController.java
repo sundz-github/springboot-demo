@@ -7,12 +7,16 @@ import com.sun.springbootdemo.entities.Person;
 import com.sun.springbootdemo.entities.Pet;
 import com.sun.springbootdemo.entities.Record;
 import com.sun.springbootdemo.entities.Result;
+import com.sun.springbootdemo.entities.User;
+import com.sun.springbootdemo.mapper.UserMapper;
 import com.sun.springbootdemo.service.exceptions.EntitiesException;
+import com.sun.springbootdemo.utils.ExcelUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +30,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -44,6 +54,9 @@ public class BrowserApplicationController {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Resource
+    private UserMapper userMapper;
 
     @ApiOperation(value = "测试方法", notes = "test方法")
     @RequestMapping(value = "/test", method = RequestMethod.POST)
@@ -86,7 +99,7 @@ public class BrowserApplicationController {
     }
 
     @GetMapping(value = "/exception")
-    public String handleException(@RequestParam("userid") String userId) {
+    public String handleException(@RequestParam(value = "userid", required = false) String userId) {
         log.info("userId -->> " + userId);
         if (StringUtils.isBlank(userId)) {
             throw new EntitiesException();
@@ -114,4 +127,29 @@ public class BrowserApplicationController {
         return new Result.Builder<Record>().success(record).build();
     }
 
+    @GetMapping("exportData")
+    public void downLoad(HttpServletResponse response) throws IOException {
+        List<User> users = userMapper.selectAll();
+        String[] heads = {"id", "用户名", "密码", "年龄", "角色", "更新时间"};
+        Workbook workbook = ExcelUtils.exportData(heads, users);
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        String outFile = "用户-" + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()) + ".xls";
+        //设置返回的文件类型
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        //对文件编码
+        outFile = response.encodeURL(new String(outFile.getBytes("gb2312"), "iso8859-1"));
+        //使用Servlet实现文件下载的时候，避免浏览器自动打开文件
+        response.addHeader("Content-Disposition", "attachment;filename=" + outFile);
+    }
+
+    @GetMapping("imporData")
+    public List<User> imporData(@RequestParam("filePath") String filePath) {
+        return ExcelUtils.importData(filePath);
+    }
+
+    @GetMapping("test")
+    public String test(/*@RequestParam("id") String filePath*/) {
+        return "Hello World!";
+    }
 }

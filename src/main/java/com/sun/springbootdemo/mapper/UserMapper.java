@@ -1,5 +1,6 @@
 package com.sun.springbootdemo.mapper;
 
+import com.sun.springbootdemo.entities.RoleEnum;
 import com.sun.springbootdemo.entities.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,6 +19,8 @@ public interface UserMapper {
     User selectOne(@Param("userName") String userName);
 
     int update(Integer id, String name);
+
+    int updateRole(Integer id, RoleEnum roleEnum);
 
     int deleteById(@Param("id") Integer id);
 
