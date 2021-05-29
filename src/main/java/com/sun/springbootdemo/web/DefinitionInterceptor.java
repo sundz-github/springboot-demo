@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
 
 /**
  * 执行顺序： preHandle -> 控制器（contorller）-> postHandle -> 页面渲染 -> afterCompletion
@@ -23,9 +24,12 @@ public class DefinitionInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        log.info("到达控制器之前的操作！");
         if (handler instanceof HandlerMethod) {
+            log.info("到达控制器之前的操作！");
             HandlerMethod handlerMethod = (HandlerMethod) handler;
+            Method method = handlerMethod.getMethod();
+            String queryString = request.getQueryString();
+            String param = request.getParameter("param");
             // 获取控制器
             Object bean = handlerMethod.getBean();
             String controllerName = ((HandlerMethod) handler).getBeanType().getName();

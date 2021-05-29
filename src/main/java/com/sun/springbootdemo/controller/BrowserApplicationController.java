@@ -4,7 +4,6 @@ package com.sun.springbootdemo.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.sun.springbootdemo.entities.Person;
-import com.sun.springbootdemo.entities.Pet;
 import com.sun.springbootdemo.entities.Record;
 import com.sun.springbootdemo.entities.Result;
 import com.sun.springbootdemo.entities.User;
@@ -90,14 +89,6 @@ public class BrowserApplicationController {
     }
 
 
-    @PostMapping(value = "v1/pets")
-    public ResponseEntity<Pet> getPetEntities(@RequestBody(required = false) Pet p) {
-        if (Objects.isNull(p) || StringUtils.isAnyBlank(p.getName(), p.getSex())) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>(p, HttpStatus.OK);
-    }
-
     @GetMapping(value = "/exception")
     public String handleException(@RequestParam(value = "userid", required = false) String userId) {
         log.info("userId -->> " + userId);
@@ -148,8 +139,5 @@ public class BrowserApplicationController {
         return ExcelUtils.importData(filePath);
     }
 
-    @GetMapping("test")
-    public String test(/*@RequestParam("id") String filePath*/) {
-        return "Hello World!";
-    }
+
 }
