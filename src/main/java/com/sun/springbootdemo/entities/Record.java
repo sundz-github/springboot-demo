@@ -1,7 +1,6 @@
 package com.sun.springbootdemo.entities;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.google.common.base.MoreObjects;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 
@@ -26,6 +25,9 @@ public class Record implements Serializable {
 
     private String name;
 
+    public Record(long id) {
+        this.id = id;
+    }
 
     public Record() {
         log.info("Record的<无>参构造被调用了!");
@@ -42,9 +44,14 @@ public class Record implements Serializable {
         log.info("初始化方法initial开始调用了!");
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return MoreObjects.toStringHelper(Record.class).add("id", id).add("name", name).toString();
-    }
+    }*/
 
+    @Override
+    public String toString() {
+        return "{" + "id=" + id + ", name='" + name + '\'' +
+                '}';
+    }
 }

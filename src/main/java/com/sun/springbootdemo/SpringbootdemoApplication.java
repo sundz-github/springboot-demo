@@ -1,5 +1,6 @@
 package com.sun.springbootdemo;
 
+import com.sun.springbootdemo.config.bean.ImporSelectorConfiguration;
 import com.sun.springbootdemo.web.DefinitionEvent;
 import com.sun.springbootdemo.web.DefinitionInitializer;
 import lombok.extern.log4j.Log4j2;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Import;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -28,6 +30,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableScheduling
 @EnableAsync
 @EnableRetry
+@Import({ImporSelectorConfiguration.class})
 public class SpringbootdemoApplication {
 
 
@@ -36,15 +39,12 @@ public class SpringbootdemoApplication {
 
 
     public static void main(String[] args) {
-
         SpringApplication springApplication = new SpringApplication(SpringbootdemoApplication.class);
         springApplication.addInitializers(new DefinitionInitializer());
         //springApplication.addListeners(new SimpleDefinitionListen()); // -- >相当于向容器注册bean
         ConfigurableApplicationContext applicationContext = springApplication.run(args);
         applicationContext.publishEvent(new DefinitionEvent("我是定义事件!"));
         log.info("<---------------SpringbootdemoApplication工程正在启动--------------->");
-
     }
-
-
+    
 }
