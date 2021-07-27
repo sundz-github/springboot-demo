@@ -23,7 +23,7 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 
 /**
@@ -69,7 +69,7 @@ public class Person implements Serializable {
     @ApiModelProperty(name = "birthDay", value = "生日", example = "1992-01-01")
     @JsonProperty("birthDay")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthDay;
+    private Date birthDay;
 
     @ApiModelProperty(name = "pet", value = "pet对象")
     @JsonProperty(value = "pet")

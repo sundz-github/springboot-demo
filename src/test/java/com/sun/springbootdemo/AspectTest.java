@@ -46,7 +46,7 @@ public class AspectTest extends BaseJnuit5Test {
 
     @Test
     public void test3() {
-        System.out.println(Runtime.getRuntime().availableProcessors());
+        commconProperty.test1("H");
     }
 
 

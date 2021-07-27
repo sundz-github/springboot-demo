@@ -7,14 +7,23 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * <p> 定制spring - security </p>
  *
  * @author Sundz
  * @date 2021/4/11 11:06
+ * @field 认证  --> 你是谁？你能做什么？
+ * @field 授权  -- > 你可以做什么？有什么权限？
  */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)  // 拦截@PreAuthorize
@@ -23,6 +32,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+
     /**
      * @field 认证  --> 你是谁？你能做什么？
      */
@@ -30,7 +40,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 授权供给者
         auth.userDetailsService(customUserDetailsService);
-        /*Collection<GrantedAuthority> authorities = new ArrayList<>();
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
         // 角色
         authorities.add(new SimpleGrantedAuthority("ROLE_NORMAL"));
         UserDetails userDetails = new User("guest", passwordEncoder().encode("123456"), authorities);
@@ -40,20 +50,22 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 // 账号对应的角色
                 .roles("ADMIN", "NORMAL")
                 .and()
-                .withUser(userDetails);*/
+                .withUser(userDetails);
+
 
     }
 
+
     /**
-     * @field 授权  -- > 你可以做什么？有什么权限？
+     * @field 授权  -->你可以做什么？有什么权限？
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 默认可以访问没有设置权限的接口
         http.authorizeRequests()
                 // 根路径都可以看到所有
-                .antMatchers("/").permitAll()
-                /*// admin路劲下能admin用户能看到的s
+                .antMatchers("/noLogin/**").permitAll()
+                // admin路劲下能admin用户能看到的s
                 .antMatchers("/admin/**")
                 .hasRole("admin")
                 // normal路劲下能normal用户能看到的
@@ -61,8 +73,11 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .hasRole("normal")
                 // 任何请求都需要认证
                 .anyRequest()
-                .authenticated()*/
-                .and().formLogin();
+                .authenticated()
+                .and().formLogin()
+                // RESTful技术与CSRF(Cross-site request forgery跨站请求伪造)的冲突造成的，CSRF默认支持的方法： GET|HEAD|TRACE|OPTIONS，不支持POST
+                // 可以在security在配置中禁用掉它
+                .and().csrf().disable();
     }
 
     @Bean

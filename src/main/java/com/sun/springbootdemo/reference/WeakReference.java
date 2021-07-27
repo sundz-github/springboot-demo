@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +34,7 @@ public class WeakReference {
         daemon.start();
         List<java.lang.ref.WeakReference<Person>> list = new ArrayList<>();
         for (int i = 0; i < 3000; i++) {
-            list.add(new java.lang.ref.WeakReference<>(new Person("夏侯惇", 33, "m", false, LocalDate.now(), null), queue));
+            list.add(new java.lang.ref.WeakReference<>(new Person("夏侯惇", 33, "m", false, new Date(), null), queue));
             log.info("插入的个人数:{}", i + 1);
         }
         list = null;

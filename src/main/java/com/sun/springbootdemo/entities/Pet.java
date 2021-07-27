@@ -1,7 +1,6 @@
 package com.sun.springbootdemo.entities;
 
 
-import com.google.common.base.MoreObjects;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -42,6 +41,10 @@ public class Pet implements Serializable {
     @NotNull
     private String sex;
 
+    public Pet(@Length(min = 3, max = 8, message = "鹦鹉的名字只能是3到8个字符!") @NotNull String name) {
+        this.name = name;
+    }
+
     public Pet(String name, int age) {
         this.name = name;
         this.age = age;
@@ -51,9 +54,16 @@ public class Pet implements Serializable {
 
     }
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(Pet.class).add("name", name).add("age", age).toString();
+    public void print() {
+        System.out.println("Pet");
     }
 
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", sex='" + sex + '\'' +
+                '}';
+    }
 }

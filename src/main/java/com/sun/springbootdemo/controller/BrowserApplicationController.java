@@ -3,12 +3,12 @@ package com.sun.springbootdemo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
+import com.sun.springbootdemo.annotation.RequestLog;
 import com.sun.springbootdemo.entities.Person;
 import com.sun.springbootdemo.entities.Record;
 import com.sun.springbootdemo.entities.Result;
 import com.sun.springbootdemo.entities.User;
 import com.sun.springbootdemo.mapper.UserMapper;
-import com.sun.springbootdemo.service.exceptions.EntitiesException;
 import com.sun.springbootdemo.utils.ExcelUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,7 +48,7 @@ import java.util.Objects;
 @RestController
 @Log4j2
 @Api(value = "Controller控制器", tags = {"BrowserApplicationController"})
-@RequestMapping(value = "/v1")
+@RequestMapping(value = "noLogin")
 public class BrowserApplicationController {
 
     @Autowired
@@ -62,7 +62,7 @@ public class BrowserApplicationController {
     public Result<String> test(HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "param") String t) {
         log.info("getRequestURL:" + request.getRequestURI());  //URL -->> http://localhost:8080/v1/test  URI -->> /v1/test
         Map<String, String[]> parameterMap = request.getParameterMap();
-        return new Result<>("");
+        return new Result<>("success");
     }
 
     /**
@@ -80,22 +80,13 @@ public class BrowserApplicationController {
 
 
     @PostMapping(value = "/entities")
+    @RequestLog(type = 1, remark = "getEntity的请求日志")
     //@ApiImplicitParam(value = "传入字符串", name = "name", example = "Hello World", required = true, dataType = "string", paramType = "query")
     public ResponseEntity<Person> getEntity(@ApiParam(name = "person", value = "person对象") @Validated @RequestBody Person p) {
         if (Objects.isNull(p)) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(p, HttpStatus.OK);
-    }
-
-
-    @GetMapping(value = "/exception")
-    public String handleException(@RequestParam(value = "userid", required = false) String userId) {
-        log.info("userId -->> " + userId);
-        if (StringUtils.isBlank(userId)) {
-            throw new EntitiesException();
-        }
-        return "hello world!";
     }
 
 
@@ -137,6 +128,11 @@ public class BrowserApplicationController {
     @GetMapping("imporData")
     public List<User> imporData(@RequestParam("filePath") String filePath) {
         return ExcelUtils.importData(filePath);
+    }
+
+    @PostMapping("sundz")
+    public String test() {
+        return "sundz";
     }
 
 

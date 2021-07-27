@@ -17,7 +17,7 @@ import java.util.Set;
  */
 @Log4j2
 @Component
-@Path("/v1")  // 为啥这个必须呢？
+@Path("/noLgin")  // 为啥这个必须呢？
 public class JerseyController implements JerseyControllerApi {
 
 

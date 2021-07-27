@@ -1,8 +1,6 @@
 package com.sun.springbootdemo.web;
 
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,8 +17,6 @@ import java.lang.reflect.Method;
 @Log4j2
 public class DefinitionInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -35,7 +31,7 @@ public class DefinitionInterceptor implements HandlerInterceptor {
             String controllerName = ((HandlerMethod) handler).getBeanType().getName();
             return true;
         }
-        return false;
+        return true;
 
     }
 

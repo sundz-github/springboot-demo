@@ -25,7 +25,7 @@ public class DefinitionAspect {
      * argNames表示其参数名称  声明顺序必须与方法形参声明顺序一致(JoinPoint参数必须放在前面，否则将报错)
      */
     @AfterReturning(pointcut = "execution(* com.sun.springbootdemo.config.CommconProperty.test1(..)) && args(arg)", returning = "resultValue", argNames = "joinPoint,arg,resultValue")
-    public void operationAspect(JoinPoint joinPoint, String arg, String resultValue) throws Throwable {
+    public void operationAspect(JoinPoint joinPoint, String arg, String resultValue) {
         log.info("切面操作正在执行.................-->> " + arg + " " + resultValue);
         String signatureName = joinPoint.getSignature().getName();
         log.info("signatureName:{}", signatureName);
