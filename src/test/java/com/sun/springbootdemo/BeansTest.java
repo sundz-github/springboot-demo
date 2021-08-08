@@ -11,6 +11,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -46,14 +47,13 @@ public class BeansTest extends BaseJnuit5Test {
     private XiaoMingImpl xiaoMing;
 
 
-    @Autowired
+    @Resource
     private AnimalService animalService;
 
 
     @Test
     public void reflectTest() throws Exception {
-        animalService.test();
-        System.out.println("我的");
+        
 
     }
 

@@ -1,6 +1,7 @@
 package com.sun.springbootdemo.web;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.core.MethodParameter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,8 +25,8 @@ public class DefinitionInterceptor implements HandlerInterceptor {
             log.info("到达控制器之前的操作！");
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
-            String queryString = request.getQueryString();
-            String param = request.getParameter("param");
+            MethodParameter[] methodParameters = handlerMethod.getMethodParameters();
+            String type = request.getParameter("type");
             // 获取控制器
             Object bean = handlerMethod.getBean();
             String controllerName = ((HandlerMethod) handler).getBeanType().getName();

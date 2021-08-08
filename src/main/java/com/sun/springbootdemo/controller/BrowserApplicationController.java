@@ -13,6 +13,7 @@ import com.sun.springbootdemo.utils.ExcelUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -39,6 +40,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @describtion: 控制类
@@ -59,10 +62,15 @@ public class BrowserApplicationController {
 
     @ApiOperation(value = "测试方法", notes = "test方法")
     @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public Result<String> test(HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "param") String t) {
+    @SneakyThrows
+    public void test(HttpServletRequest request, HttpServletResponse response) {
         log.info("getRequestURL:" + request.getRequestURI());  //URL -->> http://localhost:8080/v1/test  URI -->> /v1/test
         Map<String, String[]> parameterMap = request.getParameterMap();
-        return new Result<>("success");
+        response.setContentType("application/json;charset=utf-8");
+        response.getWriter().write("{\n" +
+                "    \"code\":1,\n" +
+                "    \"meaasge\":\"success\"\n" +
+                "}");
     }
 
     /**
@@ -73,9 +81,19 @@ public class BrowserApplicationController {
      * @Version: V1.0
      * @Date: 2020/7/31 13:53
      */
-    @RequestMapping(value = "/formData", method = RequestMethod.POST)
-    public String abc(@RequestParam String data) {
-        return data;
+    @RequestMapping(value = "async", method = RequestMethod.POST)
+    public String async(@RequestParam(name = "type") String type) {
+        CompletableFuture<String> asyncFuture = CompletableFuture.supplyAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                log.error(e.getMessage(), e);
+            }
+            System.out.println("异步线程：" + Thread.currentThread().getName());
+            return "This is async result！";
+        });
+        System.out.println("主线程:" + Thread.currentThread().getName());
+        return "success";
     }
 
 
@@ -128,11 +146,6 @@ public class BrowserApplicationController {
     @GetMapping("imporData")
     public List<User> imporData(@RequestParam("filePath") String filePath) {
         return ExcelUtils.importData(filePath);
-    }
-
-    @PostMapping("sundz")
-    public String test() {
-        return "sundz";
     }
 
 

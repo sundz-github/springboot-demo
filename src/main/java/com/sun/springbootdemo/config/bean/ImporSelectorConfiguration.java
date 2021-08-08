@@ -1,7 +1,10 @@
 package com.sun.springbootdemo.config.bean;
 
+import com.sundz.service.AnimalService;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.core.type.AnnotationMetadata;
 
 import java.util.Set;
@@ -21,9 +24,9 @@ public class ImporSelectorConfiguration implements ImportBeanDefinitionRegistrar
             Set<String> anImport = metadata.getMetaAnnotationTypes(s);
             System.out.println(anImport);
         }
-       /* MergedAnnotations annotations = metadata.getAnnotations();
+        MergedAnnotations annotations = metadata.getAnnotations();
         String className = metadata.getClassName();
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(AnimalService.class.getName());
-        registry.registerBeanDefinition("animalService", builder.getBeanDefinition());*/
+        registry.registerBeanDefinition("animalService", builder.getBeanDefinition());
     }
 }

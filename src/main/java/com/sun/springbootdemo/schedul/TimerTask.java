@@ -20,13 +20,13 @@ import java.util.concurrent.TimeUnit;
 public class TimerTask {
 
 
-    @Scheduled(cron = "0 0/1 * * * ? ")
+    @Scheduled(cron = "0 0/10 * * * ? ")
     public void excute() throws InterruptedException {
         log.info("定时任务<do1>开始执行了 ==> thread{}:", Thread.currentThread().getName());
         TimeUnit.SECONDS.sleep(6);
     }
 
-    @Scheduled(cron = "0 0/2 * * * ? ")
+    @Scheduled(cron = "0 0/20 * * * ? ")
     public void excute2() {
         log.info("定时任务<do2>开始执行了 ==> thread{}:", Thread.currentThread().getName());
     }
