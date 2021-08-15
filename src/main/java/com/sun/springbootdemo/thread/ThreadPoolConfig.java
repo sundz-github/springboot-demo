@@ -18,16 +18,21 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class ThreadPoolConfig {
 
+    private Integer cpuCount = Runtime.getRuntime().availableProcessors();
+
     @Bean
     public ExecutorService executorService() {
 
+        /**
+         * @field (线程空闲时间 / 线程占用时间 + 1)* CPU核数
+         */
         //core-size:核心线程数  一般为CPU核数的2倍
         //queue：线程队列
         //Max-size：最大线程数c
         //thread-factory: 线程工厂
         //refuse-plocy;拒绝策略
         //keep-alive：线程空闲时间
-        return new ThreadPoolExecutor(4, Runtime.getRuntime().availableProcessors(), 30, TimeUnit.SECONDS,
-                new ArrayBlockingQueue<>(100), Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
+        return new ThreadPoolExecutor(cpuCount * 2, cpuCount * 4, 30, TimeUnit.SECONDS,
+                new ArrayBlockingQueue<>(1000), Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
     }
 }

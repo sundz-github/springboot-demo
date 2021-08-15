@@ -9,6 +9,7 @@ import com.sun.springbootdemo.entities.Record;
 import com.sun.springbootdemo.entities.Result;
 import com.sun.springbootdemo.entities.User;
 import com.sun.springbootdemo.mapper.UserMapper;
+import com.sun.springbootdemo.retry.RetryService;
 import com.sun.springbootdemo.utils.ExcelUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -59,6 +61,12 @@ public class BrowserApplicationController {
 
     @Resource
     private UserMapper userMapper;
+
+    @Autowired
+    private ExecutorService executorService;
+
+    @Autowired
+    private RetryService retryService;
 
     @ApiOperation(value = "测试方法", notes = "test方法")
     @RequestMapping(value = "/test", method = RequestMethod.POST)
@@ -82,9 +90,12 @@ public class BrowserApplicationController {
      * @Date: 2020/7/31 13:53
      */
     @RequestMapping(value = "async", method = RequestMethod.POST)
-    public String async(@RequestParam(name = "type") String type) {
+    public String async(@RequestParam(name = "type") Integer type) {
         CompletableFuture<String> asyncFuture = CompletableFuture.supplyAsync(() -> {
             try {
+                if (type == 1) {
+                    throw new RuntimeException("异常来啦!");
+                }
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
                 log.error(e.getMessage(), e);
@@ -92,6 +103,28 @@ public class BrowserApplicationController {
             System.out.println("异步线程：" + Thread.currentThread().getName());
             return "This is async result！";
         });
+        asyncFuture.whenComplete((a, b) -> {
+            System.out.println("whenComplete获取的结果:" + a);
+            if (!Objects.isNull(b)) {
+                b.printStackTrace();
+            }
+            System.out.println("whenComplete异步线程：" + Thread.currentThread().getName());
+        });
+        // 正常回调
+        CompletableFuture<String> callback = asyncFuture.thenApplyAsync(result -> {
+            System.out.println("回调线程：" + Thread.currentThread().getName());
+            return "This is callback result！";
+        }, executorService);
+        /*// 异常回调
+        CompletableFuture<String> exceCallBack = callback.exceptionally(e -> {
+            try {
+                System.out.println("异常回调线程：" + Thread.currentThread().getName());
+                throw new RuntimeException(e);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            return "This is exception result！";
+        });*/
         System.out.println("主线程:" + Thread.currentThread().getName());
         return "success";
     }
@@ -146,6 +179,12 @@ public class BrowserApplicationController {
     @GetMapping("imporData")
     public List<User> imporData(@RequestParam("filePath") String filePath) {
         return ExcelUtils.importData(filePath);
+    }
+
+    @GetMapping("retry")
+    public String retry(@RequestParam("id") String id) {
+        retryService.apply(id);
+        return "retry";
     }
 
 

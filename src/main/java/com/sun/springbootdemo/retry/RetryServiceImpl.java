@@ -23,11 +23,13 @@ public class RetryServiceImpl implements RetryService {
 
     @Retryable(value = Exception.class, maxAttempts = 5, backoff = @Backoff(delay = 3000, maxDelay = 10000, multiplier = 1))
     @Override
-    public Result<String> apply(String param) {
+    public String apply(String param) {
         count++;
-        log.info("第{}次执行apply方法了!", count);
-        int a = 1 / 0;
-        return null;
+        log.info("第【{}】次执行apply方法了!", count);
+        if (param.equals("1")) {
+            throw new RuntimeException("重试异常!");
+        }
+        return param;
     }
 
     /**
@@ -37,8 +39,8 @@ public class RetryServiceImpl implements RetryService {
      * @return {@link Result<String>}  该方法的方法返回值应该与重试方法一致
      */
     @Override
-    public Result<String> recover(Exception e, String param) {
+    public String recover(Exception e, String param) {
         log.info("recover的熔断措施执行了！");
-        return new Result.Builder<String>().success("多次失败后，我进行了尝试，但是最终都失败了!").build();
+        return "recover的熔断措施执行了";
     }
 }

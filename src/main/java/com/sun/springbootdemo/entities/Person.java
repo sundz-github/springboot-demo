@@ -16,6 +16,7 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import javax.validation.Valid;
@@ -69,6 +70,7 @@ public class Person implements Serializable {
     @ApiModelProperty(name = "birthDay", value = "生日", example = "1992-01-01")
     @JsonProperty("birthDay")
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat
     private Date birthDay;
 
     @ApiModelProperty(name = "pet", value = "pet对象")
