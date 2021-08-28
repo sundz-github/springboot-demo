@@ -1,5 +1,6 @@
 package com.sun.springbootdemo.web;
 
+import com.sun.springbootdemo.web.listener.SimpleDefinitionListen;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
@@ -84,7 +85,7 @@ public class WebConfigurations {
      *
      * @param  只有指定的监听器才能被注册，例如：ServletContextAttributeListener，ServletRequestListener
      *  ServletRequestAttributeListener、HttpSessionAttributeListener、HttpSessionListener、
-     * @return {@link ServletListenerRegistrationBean<SimpleDefinitionListen>}
+     * @return {@link ServletListenerRegistrationBean< SimpleDefinitionListen >}
      */
     /*@Bean
     public ServletListenerRegistrationBean<SimpleDefinitionListen> servletListenerRegistrationBean() {

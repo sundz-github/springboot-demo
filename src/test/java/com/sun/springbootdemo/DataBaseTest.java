@@ -50,8 +50,8 @@ public class DataBaseTest extends BaseJnuit5Test {
         user.setDate(new Date());
         user.setRoleEnum(RoleEnum.ADMINSTRATION);
         getMethods();*/
-        /*int insert = userMapper.updateRole(9, RoleEnum.NORMAL);
-        System.out.println(insert);*/
+        /*int insertBatch = userMapper.updateRole(9, RoleEnum.NORMAL);
+        System.out.println(insertBatch);*/
         System.out.println(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss").format(LocalDateTime.now()));
     }
 

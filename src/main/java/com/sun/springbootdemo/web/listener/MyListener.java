@@ -1,4 +1,4 @@
-package com.sun.springbootdemo.web;
+package com.sun.springbootdemo.web.listener;
 
 import lombok.extern.log4j.Log4j2;
 

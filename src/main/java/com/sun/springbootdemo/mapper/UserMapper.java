@@ -12,7 +12,7 @@ import java.util.List;
  * @Version: V1.0
  * @Date: 2020/8/10 10:00
  */
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 
     List<User> selectAll();
 
@@ -24,6 +24,6 @@ public interface UserMapper {
 
     int deleteById(@Param("id") Integer id);
 
-    int insert(User user);
+    int insertBatch(@Param("list") List<User> list);
 
 }

@@ -1,5 +1,6 @@
-package com.sun.springbootdemo.web;
+package com.sun.springbootdemo.web.listener;
 
+import com.sun.springbootdemo.web.DefinitionEvent;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;

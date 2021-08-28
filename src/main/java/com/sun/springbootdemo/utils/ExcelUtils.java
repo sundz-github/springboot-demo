@@ -1,3 +1,4 @@
+/*
 package com.sun.springbootdemo.utils;
 
 import com.sun.springbootdemo.entities.User;
@@ -32,12 +33,41 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+*/
 /**
  * <p> excel处理工具 </p>
  *
  * @author Sundz
  * @date 2021/5/9 9:27
- */
+ * <p>
+ * 导出excel数据
+ * @param heads
+ * @param users
+ * @return {@link Workbook}
+ * <p>
+ * 导入数据
+ * @param filePath
+ * @return {@link List<List<String>>}
+ * <p>
+ * 初始化反射参数
+ * @param content
+ * @param type
+ * @return {@link Object}
+ * <p>
+ * 获取工作簿
+ * @param filePath 文件路径
+ * @return {@link Workbook}
+ * <p>
+ * 设置excel样式
+ * @param workbook
+ * @param ishead
+ * @return {@link CellStyle}
+ * <p>
+ * 获取其中的get方法
+ * @param t
+ * @return {@link Map<Integer, Method>}
+ *//*
+
 @Log4j2
 public final class ExcelUtils {
 
@@ -45,13 +75,15 @@ public final class ExcelUtils {
 
     private static final String EXCEL_XLSX = "xlsx";
 
-    /**
-     * 导出excel数据
-     *
-     * @param heads
-     * @param users
-     * @return {@link Workbook}
-     */
+    */
+/**
+ * 导出excel数据
+ *
+ * @param heads
+ * @param users
+ * @return {@link Workbook}
+ *//*
+
     public static Workbook exportData(String[] heads, List<User> users) {
         Workbook workbook = new HSSFWorkbook();
         Sheet sheet = workbook.createSheet("用户信息");
@@ -88,12 +120,14 @@ public final class ExcelUtils {
     }
 
 
-    /**
-     * 导入数据
-     *
-     * @param filePath
-     * @return {@link List<List<String>>}
-     */
+    */
+/**
+ * 导入数据
+ *
+ * @param filePath
+ * @return {@link List<List<String>>}
+ *//*
+
     public static List<User> importData(final String filePath) {
         Workbook workbook = getWorkbook(filePath);
         if (Objects.isNull(workbook)) {
@@ -144,13 +178,15 @@ public final class ExcelUtils {
         return result;
     }
 
-    /**
-     * 初始化反射参数
-     *
-     * @param content
-     * @param type
-     * @return {@link Object}
-     */
+    */
+/**
+ * 初始化反射参数
+ *
+ * @param content
+ * @param type
+ * @return {@link Object}
+ *//*
+
     private static Object transformType(String content, String type) {
         Object obj = null;
         if (StringUtils.isBlank(content)) {
@@ -198,12 +234,14 @@ public final class ExcelUtils {
     }
 
 
-    /**
-     * 获取工作簿
-     *
-     * @param filePath 文件路径
-     * @return {@link Workbook}
-     */
+    */
+/**
+ * 获取工作簿
+ *
+ * @param filePath 文件路径
+ * @return {@link Workbook}
+ *//*
+
     private static Workbook getWorkbook(final String filePath) {
         File file = new File(filePath);
         Workbook workbook = null;
@@ -221,13 +259,15 @@ public final class ExcelUtils {
     }
 
 
-    /**
-     * 设置excel样式
-     *
-     * @param workbook
-     * @param ishead
-     * @return {@link CellStyle}
-     */
+    */
+/**
+ * 设置excel样式
+ *
+ * @param workbook
+ * @param ishead
+ * @return {@link CellStyle}
+ *//*
+
     private static CellStyle getCellStyle(Workbook workbook, boolean ishead) {
         CellStyle centerstyle = workbook.createCellStyle();
         Font font = workbook.createFont();
@@ -251,12 +291,14 @@ public final class ExcelUtils {
         return centerstyle;
     }
 
-    /**
-     * 获取其中的get方法
-     *
-     * @param t
-     * @return {@link Map<Integer, Method>}
-     */
+    */
+/**
+ * 获取其中的get方法
+ *
+ * @param t
+ * @return {@link Map<Integer, Method>}
+ *//*
+
     private static <T> Map<Integer, Method> getMethods(Class<T> t) {
         Map<Integer, Method> methodMap = new HashMap<>(8);
         Method[] methods = t.getDeclaredMethods();
@@ -309,3 +351,4 @@ public final class ExcelUtils {
         return methodMap;
     }
 }
+*/

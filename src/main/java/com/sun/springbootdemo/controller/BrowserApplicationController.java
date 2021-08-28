@@ -1,23 +1,24 @@
 package com.sun.springbootdemo.controller;
 
 
+import com.alibaba.excel.EasyExcel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.sun.springbootdemo.annotation.RequestLog;
+import com.sun.springbootdemo.dto.UserDTO;
 import com.sun.springbootdemo.entities.Person;
 import com.sun.springbootdemo.entities.Record;
 import com.sun.springbootdemo.entities.Result;
-import com.sun.springbootdemo.entities.User;
 import com.sun.springbootdemo.mapper.UserMapper;
 import com.sun.springbootdemo.retry.RetryService;
-import com.sun.springbootdemo.utils.ExcelUtils;
+import com.sun.springbootdemo.service.database.UserService;
+import com.sun.springbootdemo.web.listener.CustomReadListener;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,16 +30,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -64,6 +65,9 @@ public class BrowserApplicationController {
 
     @Autowired
     private ExecutorService executorService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private RetryService retryService;
@@ -160,25 +164,27 @@ public class BrowserApplicationController {
         return new Result.Builder<Record>().success(record).build();
     }
 
-    @GetMapping("exportData")
+    @GetMapping("exportExcel")
     public void downLoad(HttpServletResponse response) throws IOException {
-        List<User> users = userMapper.selectAll();
-        String[] heads = {"id", "用户名", "密码", "年龄", "角色", "更新时间"};
-        Workbook workbook = ExcelUtils.exportData(heads, users);
-        ServletOutputStream outputStream = response.getOutputStream();
-        workbook.write(outputStream);
-        String outFile = "用户-" + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()) + ".xls";
+
+        String outFile = "用户-" + DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now()) + ".xlsx";
         //设置返回的文件类型
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         //对文件编码
         outFile = response.encodeURL(new String(outFile.getBytes("gb2312"), "iso8859-1"));
         //使用Servlet实现文件下载的时候，避免浏览器自动打开文件
         response.addHeader("Content-Disposition", "attachment;filename=" + outFile);
+        EasyExcel.write(response.getOutputStream(), UserDTO.class).sheet("用户信息").doWrite(userService.queryAll());
     }
 
-    @GetMapping("imporData")
-    public List<User> imporData(@RequestParam("filePath") String filePath) {
-        return ExcelUtils.importData(filePath);
+    @GetMapping("imporExcel")
+    @SneakyThrows
+    public void imporData(@RequestParam("file") MultipartFile file) {
+        String originalFilename = file.getOriginalFilename();
+        if (StringUtils.isBlank(originalFilename)) {
+            throw new FileNotFoundException("上传文件名不存在!");
+        }
+        EasyExcel.read(file.getInputStream(), UserDTO.class, new CustomReadListener(userMapper)).sheet().doRead();
     }
 
     @GetMapping("retry")

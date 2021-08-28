@@ -13,8 +13,16 @@
         <!--                     select="com.sun.springbootdemo.mapper.RoleMapper.selectOne"/>-->
         <!--<collection property="role" column="role_id" select="com.sun.springbootdemo.mapper.RoleMapper.selectAll"/>-->
     </resultMap>
-    <insert id="insert">
-        insert into pr_user(user_name, user_age, user_password, role_id)values(#{userName}, #{age}, #{passWord}, #{roleEnum, typeHandler=com.sun.springbootdemo.mybatis.EnumTypeBaseHandle})
+    <insert id="insertBatch">
+        insert into pr_user(user_name, user_age, user_password, role_id)values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.userName},
+            #{item.age},
+            #{item.passWord},
+            #{item.roleEnum, typeHandler=com.sun.springbootdemo.mybatis.EnumTypeBaseHandle}
+            )
+        </foreach>
     </insert>
 
     <update id="update">
