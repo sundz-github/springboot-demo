@@ -2,6 +2,7 @@ package com.sun.springbootdemo.dto;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * <p>  </p>
@@ -10,6 +11,7 @@ import lombok.Data;
  * @date 2021/8/28 17:37
  */
 @Data
+@ToString
 public class UserDTO {
 
     @ExcelProperty(index = 0, value = "用户名")
