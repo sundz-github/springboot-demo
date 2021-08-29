@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * <p> 从数据库获取权限 </p>
@@ -36,6 +37,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userMapper.selectOne(username);
+        if (Objects.isNull(user)) {
+            throw new UsernameNotFoundException("用户不存在");
+        }
         RoleEnum role = user.getRoleEnum();
         int order = role.getOrder();
         Collection<GrantedAuthority> authorities = new ArrayList<>();

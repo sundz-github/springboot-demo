@@ -177,7 +177,7 @@ public class BrowserApplicationController {
         EasyExcel.write(response.getOutputStream(), UserDTO.class).sheet("用户信息").doWrite(userService.queryAll());
     }
 
-    @GetMapping("imporExcel")
+    @PostMapping("imporExcel")
     @SneakyThrows
     public void imporData(@RequestParam("file") MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
