@@ -25,16 +25,17 @@ public class ProducerComsumer {
                 ticket.buy();
             }
         }, "A").start();
-        new Thread(() -> {
-            for (int i = 0; i < 10; i++) {
-                ticket.buy();
-            }
-        }, "B").start();
+
         new Thread(() -> {
             for (int i = 0; i < 10; i++) {
                 ticket.buy();
             }
         }, "C").start();
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                ticket.buy();
+            }
+        }, "B").start();
         new Thread(() -> {
             for (int i = 0; i < 10; i++) {
                 ticket.buy();
@@ -49,8 +50,8 @@ public class ProducerComsumer {
         int totalNumber = 40;
 
         public synchronized void buy() {
-            --totalNumber;
             log.info("thread->>" + Thread.currentThread().getName() + " ,当前剩余票数:" + totalNumber);
+            --totalNumber;
         }
 
     }

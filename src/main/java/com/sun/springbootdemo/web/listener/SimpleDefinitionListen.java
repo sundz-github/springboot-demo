@@ -1,6 +1,6 @@
 package com.sun.springbootdemo.web.listener;
 
-import com.sun.springbootdemo.web.DefinitionEvent;
+import com.sun.springbootdemo.web.CustomDefinitionEvent;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component;
 @Component
 //@WebListener
 @Log4j2
-public class SimpleDefinitionListen implements ApplicationListener<DefinitionEvent> {
+public class SimpleDefinitionListen implements ApplicationListener<CustomDefinitionEvent> {
 
     @Override
-    public void onApplicationEvent(DefinitionEvent event) {
+    public void onApplicationEvent(CustomDefinitionEvent event) {
         Object source = event.getSource();
         log.info("《DefinitionEvent》自定义事件被《SimpleDefinitionListen》监听到了-->>" + source);
     }

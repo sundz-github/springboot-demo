@@ -8,8 +8,8 @@ import java.util.List;
  * @author Sundz
  * @date 2021/8/28 18:01
  */
-public interface BaseMapper<T> {
+public interface BaseMapper<D> {
 
-    int insertBatch(List<T> t);
+    int insertBatch(List<D> t);
 
 }

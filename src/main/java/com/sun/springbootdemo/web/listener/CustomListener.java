@@ -14,7 +14,7 @@ import javax.servlet.annotation.WebListener;
  */
 @WebListener
 @Log4j2
-public class MyListener implements ServletContextListener {
+public class CustomListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         log.info("<----------------容器初始化---------------->");

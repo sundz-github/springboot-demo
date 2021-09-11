@@ -1,11 +1,13 @@
 package com.sun.springbootdemo.thread;
 
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p> 多个线程交替执行 == >> 线程间需要通信 </p>
@@ -18,37 +20,23 @@ public class AlternateExecute {
 
 
     @Test
+    @SneakyThrows
     public void threadTest() {
         CountDownLatch countDownLatch = new CountDownLatch(5);
         CyclicBarrier cyclicBarrier = new CyclicBarrier(5);
         Semaphore semaphore = new Semaphore(2);
         Reset reset = new Reset();
         new Thread(() -> {
-            for (int i = 0; i < 10; i++) {
-                reset.increase();
-            }
-        }, "A").start();
-
-        new Thread(() -> {
-            for (int i = 0; i < 10; i++) {
-                reset.increase();
-            }
-        }, "C").start();
-
-        new Thread(() -> {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 2; i++) {
                 reset.decrease();
             }
         }, "B").start();
-
-
         new Thread(() -> {
-            for (int i = 0; i < 10; i++) {
-                reset.decrease();
+            for (int i = 0; i < 2; i++) {
+                reset.increase();
             }
-        }, "D").start();
-
-        //TimeUnit.SECONDS.sleep(5);
+        }, "A").start();
+        TimeUnit.SECONDS.sleep(40);
     }
 
     class Reset {
@@ -56,11 +44,10 @@ public class AlternateExecute {
         /**
          * @field 复位状态
          */
-        int status = 0;
+        private int status = 0;
 
 
         public synchronized void increase() {
-
             try {
                 // 阻塞  等待  防止多次累加
                 while (status != 0) {

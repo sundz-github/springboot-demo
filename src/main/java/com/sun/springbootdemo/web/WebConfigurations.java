@@ -26,8 +26,8 @@ import java.util.Map;
 public class WebConfigurations {
 
 
-    @EventListener(value = DefinitionEvent.class)
-    public void envetHandle(DefinitionEvent d) {
+    @EventListener(value = CustomDefinitionEvent.class)
+    public void envetHandle(CustomDefinitionEvent d) {
         System.out.println("@EventListener注解监听：" + d);
 
     }

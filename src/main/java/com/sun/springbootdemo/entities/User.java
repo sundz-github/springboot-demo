@@ -2,6 +2,7 @@ package com.sun.springbootdemo.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,13 @@ import java.util.Map;
  * @Date: 2020/6/17 10:51
  * @Version: V1.0
  **/
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
 @Log4j2
-public class User implements Serializable {
+public class User extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -3493729785479686616L;
 

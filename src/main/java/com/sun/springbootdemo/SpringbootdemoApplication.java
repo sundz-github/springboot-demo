@@ -1,7 +1,7 @@
 package com.sun.springbootdemo;
 
 import com.sun.springbootdemo.config.bean.ImporSelectorConfiguration;
-import com.sun.springbootdemo.web.DefinitionEvent;
+import com.sun.springbootdemo.web.CustomDefinitionEvent;
 import com.sun.springbootdemo.web.DefinitionInitializer;
 import lombok.extern.log4j.Log4j2;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -43,8 +43,8 @@ public class SpringbootdemoApplication {
         springApplication.addInitializers(new DefinitionInitializer());
         //springApplication.addListeners(new SimpleDefinitionListen()); // -- >相当于向容器注册bean
         ConfigurableApplicationContext applicationContext = springApplication.run(args);
-        applicationContext.publishEvent(new DefinitionEvent("我是定义事件!"));
+        applicationContext.publishEvent(new CustomDefinitionEvent("我是定义事件!"));
         log.info("<---------------SpringbootdemoApplication工程正在启动--------------->");
     }
-    
+
 }

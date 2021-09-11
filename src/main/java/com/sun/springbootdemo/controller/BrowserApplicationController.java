@@ -9,16 +9,19 @@ import com.sun.springbootdemo.dto.UserDTO;
 import com.sun.springbootdemo.entities.Person;
 import com.sun.springbootdemo.entities.Record;
 import com.sun.springbootdemo.entities.Result;
+import com.sun.springbootdemo.entities.RoleEnum;
+import com.sun.springbootdemo.entities.User;
 import com.sun.springbootdemo.mapper.UserMapper;
 import com.sun.springbootdemo.retry.RetryService;
 import com.sun.springbootdemo.service.database.UserService;
-import com.sun.springbootdemo.web.listener.CustomReadListener;
+import com.sun.springbootdemo.utils.ExcelUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,11 +43,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 /**
  * @describtion: 控制类
@@ -184,7 +190,22 @@ public class BrowserApplicationController {
         if (StringUtils.isBlank(originalFilename)) {
             throw new FileNotFoundException("上传文件名不存在!");
         }
-        EasyExcel.read(file.getInputStream(), UserDTO.class, new CustomReadListener(userMapper)).sheet().doRead();
+        Consumer<List<UserDTO>> action = x -> {
+            List<User> users = new ArrayList<>();
+            for (UserDTO dto : x) {
+                User user = new User();
+                BeanUtils.copyProperties(dto, user);
+                String roleEnum = dto.getRoleEnum();
+                if (StringUtils.isNotBlank(roleEnum) && roleEnum.equals("ADMINSTRATION")) {
+                    user.setRoleEnum(RoleEnum.ADMINSTRATION);
+                } else {
+                    user.setRoleEnum(RoleEnum.NORMAL);
+                }
+                users.add(user);
+            }
+            userMapper.insertBatch(users);
+        };
+        EasyExcel.read(file.getInputStream(), UserDTO.class, ExcelUtils.getReadListener(action, 5)).sheet().headRowNumber(0).doRead();
     }
 
     @GetMapping("retry")
