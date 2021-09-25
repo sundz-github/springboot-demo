@@ -38,14 +38,14 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int updateUser() {
-        userMapper.update(1, "李钊");
-        try {
-            roleService.deleteById(9);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public int delUser(int id) {
+        userMapper.deleteById(id);
+        int a = 1 / 0;
         return 0;
+    }
+
+    public void test(int id) {
+        delUser(id);
     }
 
     public List<UserDTO> queryAll() {
