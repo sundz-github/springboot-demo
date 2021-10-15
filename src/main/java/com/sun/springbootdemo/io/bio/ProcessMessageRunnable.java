@@ -1,6 +1,5 @@
-package com.sun.springbootdemo.io;
+package com.sun.springbootdemo.io.bio;
 
-import com.sun.springbootdemo.io.bio.BioServer;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;

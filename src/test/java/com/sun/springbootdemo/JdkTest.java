@@ -3,7 +3,8 @@ package com.sun.springbootdemo;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <p>  </p>
@@ -24,12 +25,13 @@ public class JdkTest extends BaseJnuit5Test {
 
     @Test
     public void bufferTest() {
-        /*InputStream resourceAsStream = JdkTest.class.getResourceAsStream("/picture/动画.jpg");
-        InputStream resourceAsStream1 = JdkTest.class.getClassLoader().getResourceAsStream("picture/动画.jpg");
-        System.out.println(resourceAsStream);*/
-        File file = new File("picture/动画.jpg");
-        // E:\idea_workplace\personal\springbootdemo\picture\动画.jpg
-        System.out.println(file.getAbsolutePath());
+        ByteBuffer byteBuffer = ByteBuffer.wrap("你好".getBytes());
+        /*byteBuffer.clear();*/
+        System.out.println(byteBuffer.position());
+        System.out.println(byteBuffer.limit());
+        System.out.println(byteBuffer.remaining());
+        System.out.println(byteBuffer.capacity());
+        System.out.println(new String(byteBuffer.array(), StandardCharsets.UTF_8));
     }
 
 }
