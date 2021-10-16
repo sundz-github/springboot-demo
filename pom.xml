@@ -248,6 +248,19 @@
         <!--指定jar包名-->
         <finalName>springbootdemo</finalName>
         <plugins>
+            <!-- 资源文件拷贝插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <!-- 过滤后缀文件 -->
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>xls</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -315,6 +328,7 @@
                     <include>**/*.xml</include>
                     <include>**/*.factories</include>
                     <include>**/*.jpg</include>
+                    <include>**/*.xlsx</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>

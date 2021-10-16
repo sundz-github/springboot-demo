@@ -25,6 +25,14 @@
         </foreach>
     </insert>
 
+    <select id="getUserInfo" resultMap="UserBaseResultMap">
+        SELECT * from pr_user ORDER BY user_name,user_age;
+    </select>
+
+    <select id="selectUserNum" resultType="map">
+        select user_name as userNum, count(*) as num from pr_user GROUP BY user_name;
+    </select>
+
     <update id="update">
         update pr_user set user_name = #{param2}) where user_id = #{param1}
     </update>

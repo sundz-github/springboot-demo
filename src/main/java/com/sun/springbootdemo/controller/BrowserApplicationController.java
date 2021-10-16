@@ -214,5 +214,10 @@ public class BrowserApplicationController {
         return "retry";
     }
 
+    @GetMapping("downLoad")
+    public void downLoad(HttpServletRequest request, HttpServletResponse response) {
+        userService.writeExcel(response);
+    }
+
 
 }

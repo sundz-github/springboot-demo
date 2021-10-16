@@ -5,6 +5,7 @@ import com.sun.springbootdemo.entities.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description:
@@ -25,5 +26,9 @@ public interface UserMapper extends BaseMapper<User> {
     int deleteById(@Param("id") Integer id);
 
     int insertBatch(@Param("list") List<User> list);
+
+    List<Map<String, Integer>> selectUserNum();
+
+    List<User> getUserInfo();
 
 }
