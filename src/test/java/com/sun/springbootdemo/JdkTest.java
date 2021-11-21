@@ -1,10 +1,15 @@
 package com.sun.springbootdemo;
 
+import com.sun.springbootdemo.annotation.ColumnIndex;
+import com.sun.springbootdemo.entities.User;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.annotation.AnnotationUtils;
 
+import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 /**
  * <p>  </p>
@@ -14,12 +19,33 @@ import java.nio.charset.StandardCharsets;
  */
 public class JdkTest extends BaseJnuit5Test {
 
+
     @Test
     @SneakyThrows
     public void inpuStreamTest() {
-        String s = "1234@小明";
-        System.out.println(s.substring(s.indexOf("@") + 1));
+        /*SpringBootTest annotation = AnnotationUtils.findAnnotation(BaseJnuit5Test.class, SpringBootTest.class);*/
+        for (Field field : User.class.getDeclaredFields()) {
+            ColumnIndex annotation = AnnotationUtils.findAnnotation(field, ColumnIndex.class);
+            if (Objects.isNull(annotation)) {
+                continue;
+            }
+            System.out.println(annotation.index());
+        }
 
+    }
+
+    public Object getColumnContent(int columnIndex, User user) throws IllegalAccessException {
+        Object result = null;
+        for (Field field : User.class.getDeclaredFields()) {
+            ColumnIndex annotation = AnnotationUtils.findAnnotation(field, ColumnIndex.class);
+            if (Objects.isNull(annotation)) {
+                continue;
+            }
+            if (annotation.index() == columnIndex) {
+                result = field.get(user);
+            }
+        }
+        return result;
     }
 
 

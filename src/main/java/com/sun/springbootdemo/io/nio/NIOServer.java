@@ -22,7 +22,7 @@ import java.util.Set;
  * @date 2021/10/10 21:00
  */
 @Log4j2
-public class NioServer {
+public class NIOServer {
 
     public static void main(String[] args) {
         try {
@@ -50,6 +50,7 @@ public class NioServer {
                     }
                     // 客户端接入请求 注册客户端
                     if (selectionKey.isAcceptable()) {
+                        log.info("客户端注入轮询器:{}", selectionKey);
                         SocketChannel cChannel = sChannel.accept();
                         cChannel.configureBlocking(false);
                         cChannel.register(selector, SelectionKey.OP_READ);

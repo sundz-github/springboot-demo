@@ -1,5 +1,6 @@
 package com.sun.springbootdemo.entities;
 
+import com.sun.springbootdemo.annotation.ColumnIndex;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,10 +33,13 @@ public class User extends BaseEntity implements Serializable {
 
     private Long id;
 
+    @ColumnIndex(index = 0)
     private String userName;
 
+    @ColumnIndex(index = 2)
     private Integer age;
 
+    @ColumnIndex(index = 1)
     private String passWord;
 
     private RoleEnum roleEnum;
