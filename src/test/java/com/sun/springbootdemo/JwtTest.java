@@ -20,7 +20,7 @@ public class JwtTest extends BaseJnuit5Test {
         claims.put("userId", "10002");
         String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdGFydF9qd3QiLCJleHAiOjE2Mjc3OTMxNjAsInVzZXJJZCI6IjEwMDAyIn0.5j60fRIJ9B0LnJcEj9E9c53nUmJR0ebzs35UUsrsY1U";
         // token:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdGFydF9qd3QiLCJleHAiOjE2Mjc3OTMxNjAsInVzZXJJZCI6IjEwMDAyIn0.5j60fRIJ9B0LnJcEj9E9c53nUmJR0ebzs35UUsrsY1U
-        Map<String, String> stringStringMap = JwtUtils.verifyToken(token);
+        JwtUtils.genJwt(claims);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.sun.springbootdemo.web;
 
+import com.github.isrsal.logging.ResponseWrapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.method.HandlerMethod;
@@ -9,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 执行顺序： preHandle -> 控制器（contorller）-> postHandle -> 页面渲染 -> afterCompletion
@@ -49,6 +51,8 @@ public class DefinitionInterceptor implements HandlerInterceptor {
      */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        ResponseWrapper responseWrapper = new ResponseWrapper(12L, response);
+        String s = new String(responseWrapper.toByteArray(), StandardCharsets.UTF_8);
         System.out.println("页面渲染完毕，执行某些资源释放动作!");
     }
 }

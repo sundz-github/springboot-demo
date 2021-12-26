@@ -3,6 +3,7 @@ package com.sun.springbootdemo.controller;
 
 import com.alibaba.excel.EasyExcel;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.isrsal.logging.ResponseWrapper;
 import com.google.common.collect.ImmutableMap;
 import com.sun.springbootdemo.annotation.RequestLog;
 import com.sun.springbootdemo.dto.UserDTO;
@@ -41,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -215,9 +217,18 @@ public class BrowserApplicationController {
     }
 
     @GetMapping("downLoad")
-    public void downLoad(HttpServletRequest request, HttpServletResponse response) {
-        userService.writeExcel(response);
+    public String downLoad(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("userId", "10000");
+        ResponseWrapper responseWrapper = new ResponseWrapper(12L, response);
+        String s = new String(responseWrapper.toByteArray(), StandardCharsets.UTF_8);
+        /*request.getRequestDispatcher("/noLogin/test2").forward(request, response);*/
+        return "12";
     }
 
+
+    @GetMapping("test2")
+    public String redirect(@RequestParam(name = "userId") String userId) {
+        return userId;
+    }
 
 }

@@ -30,7 +30,7 @@ public final class JwtUtils {
     /**
      * @field 密钥
      */
-    private static final String SECRET = "sundengzhi123456";
+    private static final String SECRET_KEY = "sundengzhi123456";
 
     /**
      * @field 发行人
@@ -41,7 +41,7 @@ public final class JwtUtils {
      * @field 生成token
      */
     public static String genJwt(Map<String, String> claims) {
-        Algorithm algorithm = Algorithm.HMAC256(SECRET);
+        Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
         JWTCreator.Builder builder = JWT.create().withIssuer(ISSUER).withExpiresAt(DateUtils.addMinutes(new Date(), 30));
         // 添加payload
         claims.forEach(builder::withClaim);
@@ -61,7 +61,7 @@ public final class JwtUtils {
      */
     public static Map<String, String> verifyToken(String token) {
         Map<String, String> result = new HashMap<>();
-        Algorithm algorithm = Algorithm.HMAC256(SECRET);
+        Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
         JWTVerifier build = JWT.require(algorithm).withIssuer(ISSUER).build();
         DecodedJWT verify = null;
         try {
