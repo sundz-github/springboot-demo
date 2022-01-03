@@ -3,7 +3,6 @@ package com.sun.springbootdemo.controller;
 
 import com.alibaba.excel.EasyExcel;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.isrsal.logging.ResponseWrapper;
 import com.google.common.collect.ImmutableMap;
 import com.sun.springbootdemo.annotation.RequestLog;
 import com.sun.springbootdemo.dto.UserDTO;
@@ -13,6 +12,7 @@ import com.sun.springbootdemo.entities.Result;
 import com.sun.springbootdemo.entities.RoleEnum;
 import com.sun.springbootdemo.entities.User;
 import com.sun.springbootdemo.mapper.UserMapper;
+import com.sun.springbootdemo.rabbitmq.RabitMqProducer;
 import com.sun.springbootdemo.retry.RetryService;
 import com.sun.springbootdemo.service.database.UserService;
 import com.sun.springbootdemo.utils.ExcelUtils;
@@ -40,9 +40,9 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -80,17 +80,22 @@ public class BrowserApplicationController {
     @Autowired
     private RetryService retryService;
 
+    @Autowired
+    private RabitMqProducer rabitMqProducer;
+
+
     @ApiOperation(value = "测试方法", notes = "test方法")
     @RequestMapping(value = "/test", method = RequestMethod.POST)
     @SneakyThrows
-    public void test(HttpServletRequest request, HttpServletResponse response) {
-        log.info("getRequestURL:" + request.getRequestURI());  //URL -->> http://localhost:8080/v1/test  URI -->> /v1/test
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write("{\n" +
-                "    \"code\":1,\n" +
-                "    \"meaasge\":\"success\"\n" +
-                "}");
+
+    public String test(HttpServletRequest request, HttpServletResponse response) {
+        BufferedReader reader = request.getReader();
+        String content = null;
+        StringBuilder builder = new StringBuilder();
+        while ((content = reader.readLine()) != null) {
+            builder.append(content).append("\n");
+        }
+        return builder.toString();
     }
 
     /**
@@ -217,18 +222,20 @@ public class BrowserApplicationController {
     }
 
     @GetMapping("downLoad")
-    public String downLoad(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("userId", "10000");
+    public String downLoad(HttpServletRequest request, @RequestBody String parm) throws Exception {
+        /*request.setAttribute("userId", "10000");
         ResponseWrapper responseWrapper = new ResponseWrapper(12L, response);
-        String s = new String(responseWrapper.toByteArray(), StandardCharsets.UTF_8);
+        String s = new String(responseWrapper.toByteArray(), StandardCharsets.UTF_8);*/
         /*request.getRequestDispatcher("/noLogin/test2").forward(request, response);*/
-        return "12";
+        return parm;
     }
 
 
-    @GetMapping("test2")
-    public String redirect(@RequestParam(name = "userId") String userId) {
-        return userId;
+    @PostMapping("rabbitmq")
+    public String redirect(@RequestBody Person p) throws Exception {
+        //rabitMqProducer.send(objectMapper.writeValueAsString(p));
+        rabitMqProducer.send(objectMapper.writeValueAsString(p));
+        return "OK";
     }
 
 }

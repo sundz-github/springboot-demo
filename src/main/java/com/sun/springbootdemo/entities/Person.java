@@ -20,7 +20,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import javax.validation.Valid;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -47,6 +46,8 @@ public class Person implements Serializable {
 
     private static final long serialVersionUID = 1287693690722281369L;
 
+    private Long id;
+
     @ApiModelProperty(name = "name", value = "姓名", example = "夏侯惇")
     @JsonAlias(value = {"name", "Name"})
     @NotNull(message = "姓名不能为null!")
@@ -64,7 +65,7 @@ public class Person implements Serializable {
     private String sex;
 
     @ApiModelProperty(name = "isBoss", value = "是否为老板", example = "true")
-    @AssertTrue(message = "默认为boss!")
+    //@AssertTrue(message = "默认为boss!")
     private boolean isBoss;
 
     @ApiModelProperty(name = "birthDay", value = "生日", example = "1992-01-01")

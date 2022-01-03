@@ -16,7 +16,7 @@ import java.util.Date;
 public class SoftReference {
     @Test
     public void softTest() {
-        Person p = new Person("夏侯惇", 33, "m", false, new Date(), null);
+        Person p = new Person(1L, "夏侯惇", 33, "m", false, new Date(), null);
         java.lang.ref.SoftReference<Person> softReference = new java.lang.ref.SoftReference<>(p);
         // 使其能被垃圾回收期识别 回收
         p = null;

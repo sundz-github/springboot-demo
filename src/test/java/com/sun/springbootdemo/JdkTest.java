@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.core.annotation.AnnotationUtils;
 
 import java.lang.reflect.Field;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.Objects;
 
 /**
@@ -51,13 +51,13 @@ public class JdkTest extends BaseJnuit5Test {
 
     @Test
     public void bufferTest() {
-        ByteBuffer byteBuffer = ByteBuffer.wrap("你好".getBytes());
-        /*byteBuffer.clear();*/
-        System.out.println(byteBuffer.position());
-        System.out.println(byteBuffer.limit());
-        System.out.println(byteBuffer.remaining());
-        System.out.println(byteBuffer.capacity());
-        System.out.println(new String(byteBuffer.array(), StandardCharsets.UTF_8));
+        Method[] methods = JdkTest.class.getDeclaredMethods();
+        for (Method method : methods) {
+            Parameter[] parameters = method.getParameters();
+            for (Parameter parameter : parameters) {
+                /*parameter.*/
+            }
+        }
     }
 
 }

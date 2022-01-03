@@ -34,7 +34,7 @@ public class WeakReference {
         daemon.start();
         List<java.lang.ref.WeakReference<Person>> list = new ArrayList<>();
         for (int i = 0; i < 3000; i++) {
-            list.add(new java.lang.ref.WeakReference<>(new Person("夏侯惇", 33, "m", false, new Date(), null), queue));
+            list.add(new java.lang.ref.WeakReference<>(new Person(1L, "夏侯惇", 33, "m", false, new Date(), null), queue));
             log.info("插入的个人数:{}", i + 1);
         }
         list = null;
