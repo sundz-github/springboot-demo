@@ -50,7 +50,7 @@ public class RabitMqProducer {
         MessageProperties messageProperties = new MessageProperties();
         String uuid = UUID.randomUUID().toString();
         messageProperties.setHeader("uuid", uuid);
-        //messageProperties.setContentType(MessageProperties.CONTENT_TYPE_JSON);
+        messageProperties.setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN);
         messageProperties.setMessageId(uuid);
         Message sendMsg = new Message(msg.getBytes(StandardCharsets.UTF_8), messageProperties);
         rabbitTemplate.send(exchange, routeKey, sendMsg);

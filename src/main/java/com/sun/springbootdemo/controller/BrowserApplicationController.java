@@ -232,7 +232,7 @@ public class BrowserApplicationController {
 
 
     @PostMapping("rabbitmq")
-    public String redirect(@RequestBody Person p) throws Exception {
+    public String redirect(@RequestBody String p) throws Exception {
         //rabitMqProducer.send(objectMapper.writeValueAsString(p));
         rabitMqProducer.send(objectMapper.writeValueAsString(p));
         return "OK";
