@@ -24,13 +24,8 @@ public class JdkTest extends BaseJnuit5Test {
     @SneakyThrows
     public void inpuStreamTest() {
         /*SpringBootTest annotation = AnnotationUtils.findAnnotation(BaseJnuit5Test.class, SpringBootTest.class);*/
-        for (Field field : User.class.getDeclaredFields()) {
-            ColumnIndex annotation = AnnotationUtils.findAnnotation(field, ColumnIndex.class);
-            if (Objects.isNull(annotation)) {
-                continue;
-            }
-            System.out.println(annotation.index());
-        }
+        String a = "Bearer 1234";
+        System.out.println(a.substring(7));
 
     }
 

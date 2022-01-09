@@ -27,8 +27,7 @@ public class DefineWebMvcConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        log.info("拦截器加载了!");
-        registry.addInterceptor(new DefinitionInterceptor());
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/userOp/**");
     }
 
     @Override

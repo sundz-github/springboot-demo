@@ -217,7 +217,7 @@ public class BrowserApplicationController {
 
     @GetMapping("retry")
     public String retry(@RequestParam("id") String id) {
-        retryService.apply(id);
+        /*retryService.apply(id);*/
         return "retry";
     }
 
@@ -232,9 +232,9 @@ public class BrowserApplicationController {
 
 
     @PostMapping("rabbitmq")
-    public String redirect(@RequestBody String p) throws Exception {
+    public String redirect(@RequestBody String p, @RequestParam("expSecond") Long expSecond) throws Exception {
         //rabitMqProducer.send(objectMapper.writeValueAsString(p));
-        rabitMqProducer.send(objectMapper.writeValueAsString(p));
+        rabitMqProducer.send(p, expSecond);
         return "OK";
     }
 

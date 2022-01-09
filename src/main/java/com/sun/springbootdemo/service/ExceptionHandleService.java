@@ -32,8 +32,7 @@ public class ExceptionHandleService {
         map.put("code", 200);
         map.put("error", e.getMessage());
         return map;
-    }
-*/
+    }*/
     @ExceptionHandler(value = EntitiesException.class)
     public ModelAndView handleException(Exception e) {
         log.info("handleException方法开始处理异常了,!" + e.getMessage(), e);

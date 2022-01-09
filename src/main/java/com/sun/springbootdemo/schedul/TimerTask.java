@@ -2,10 +2,7 @@ package com.sun.springbootdemo.schedul;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * <p> 定时任务 </p>
@@ -20,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class TimerTask {
 
 
-    @Scheduled(cron = "0 0/10 * * * ? ")
+    /*@Scheduled(cron = "0 0/10 * * * ? ")
     public void excute() throws InterruptedException {
         log.info("定时任务<do1>开始执行了 ==> thread{}:", Thread.currentThread().getName());
         TimeUnit.SECONDS.sleep(6);
@@ -29,5 +26,5 @@ public class TimerTask {
     @Scheduled(cron = "0 0/20 * * * ? ")
     public void excute2() {
         log.info("定时任务<do2>开始执行了 ==> thread{}:", Thread.currentThread().getName());
-    }
+    }*/
 }

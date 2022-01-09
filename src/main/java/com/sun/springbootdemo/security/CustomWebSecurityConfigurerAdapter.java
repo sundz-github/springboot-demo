@@ -58,7 +58,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
         // 默认可以访问没有设置权限的接口
         http.authorizeRequests()
                 // 根路径都可以看到所有
-                .antMatchers("/noLogin/**").permitAll()
+                .antMatchers("/noLogin/**", "/userOp/**").permitAll()
                 // admin路径下能admin用户能看到的
                 //.antMatchers("**/admin/**")
                 //.hasRole("admin")

@@ -1,8 +1,8 @@
 package com.sun.springbootdemo;
 
 import com.sun.springbootdemo.retry.RetryService;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -16,9 +16,13 @@ public class ReTryTest extends BaseJnuit5Test {
     @Autowired
     private RetryService retryService;
 
+    @Autowired
+    private SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory;
+
     @Test
-    @DisplayName("重试机制")
-    public void applyTest() {
-        retryService.apply("Hello World");
+    public void test() {
+        System.out.println(simpleRabbitListenerContainerFactory);
     }
+
+
 }

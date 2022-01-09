@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Log4j2
+@ToString
 public class User extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -3493729785479686616L;

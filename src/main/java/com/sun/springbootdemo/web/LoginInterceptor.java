@@ -1,16 +1,12 @@
 package com.sun.springbootdemo.web;
 
-import com.github.isrsal.logging.ResponseWrapper;
+import com.sun.springbootdemo.utils.RequestContextUtils;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.core.MethodParameter;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Method;
-import java.nio.charset.StandardCharsets;
 
 /**
  * 执行顺序： preHandle -> 控制器（contorller）-> postHandle -> 页面渲染 -> afterCompletion
@@ -18,12 +14,12 @@ import java.nio.charset.StandardCharsets;
  * @date: 2020/10/13 18:18
  */
 @Log4j2
-public class DefinitionInterceptor implements HandlerInterceptor {
+public class LoginInterceptor implements HandlerInterceptor {
 
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if (handler instanceof HandlerMethod) {
+        /*if (handler instanceof HandlerMethod) {
             log.info("到达控制器之前的操作！");
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
@@ -33,7 +29,28 @@ public class DefinitionInterceptor implements HandlerInterceptor {
             Object bean = handlerMethod.getBean();
             String controllerName = ((HandlerMethod) handler).getBeanType().getName();
             return true;
+        }*/
+        /*String authorization = request.getHeader("Authorization");
+        if (StringUtils.isBlank(authorization) && !authorization.startsWith("Bearer ")) {
+            throw new RuntimeException("登陆失败，请重新登录!");
         }
+
+        String token = authorization.substring(7);
+        try {
+            Map<String, String> tokenMap = JwtUtils.parseToken(token);
+            if (StringUtils.isBlank(token) || MapUtils.isEmpty(tokenMap)) {
+                throw new RuntimeException("token校验不通过,请重新登录!");
+            }
+            String userName = tokenMap.get("userName");
+            String passWord = tokenMap.get("passWord");
+            User user = new User();
+            user.setUserName(userName);
+            user.setPassWord(passWord);
+            log.info("用户信息加入上下文 user:{}", user);
+            RequestContextUtils.setUserContext(user);
+        } catch (Exception e) {
+            throw new RuntimeException("token校验不通过,请重新登录!");
+        }*/
         return true;
 
     }
@@ -51,8 +68,7 @@ public class DefinitionInterceptor implements HandlerInterceptor {
      */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        ResponseWrapper responseWrapper = new ResponseWrapper(12L, response);
-        String s = new String(responseWrapper.toByteArray(), StandardCharsets.UTF_8);
-        System.out.println("页面渲染完毕，执行某些资源释放动作!");
+        RequestContextUtils.removeUserContext();
+        log.info("页面渲染完毕，用户信息从上下文清除!");
     }
 }

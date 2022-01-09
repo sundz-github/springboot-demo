@@ -47,10 +47,10 @@ public final class JwtUtils {
         claims.forEach(builder::withClaim);
         String token = builder.sign(algorithm);
         if (MapUtil.isNotEmpty(claims)) {
-            String userId = claims.get("userId");
-            if (StringUtils.isNotBlank(userId)) {
+            String userName = claims.get("userName");
+            if (StringUtils.isNotBlank(userName)) {
                 RedisTemplate<String, Object> redisTemplate = SpringBeanUtils.getBean("redisTemplate", RedisTemplate.class);
-                redisTemplate.opsForValue().set(userId, token);
+                redisTemplate.opsForValue().set(userName, token);
             }
         }
         return token;
@@ -59,7 +59,7 @@ public final class JwtUtils {
     /**
      * @field 校验token
      */
-    public static Map<String, String> verifyToken(String token) {
+    public static Map<String, String> parseToken(String token) {
         Map<String, String> result = new HashMap<>();
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
         JWTVerifier build = JWT.require(algorithm).withIssuer(ISSUER).build();
@@ -67,7 +67,7 @@ public final class JwtUtils {
         try {
             verify = build.verify(token);
         } catch (TokenExpiredException e) {
-            log.error(e.getMessage(), e);
+            throw new RuntimeException("token失效，请重新登录!");
         }
         if (Objects.nonNull(verify)) {
             Map<String, Claim> claims = verify.getClaims();
