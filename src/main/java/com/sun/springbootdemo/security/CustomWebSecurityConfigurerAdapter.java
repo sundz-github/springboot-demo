@@ -25,6 +25,9 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    private SecurityFilter filter;
+
 
     /**
      * @field 认证  --> 你是谁？你能做什么？
@@ -68,7 +71,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 // 任何请求都需要认证
                 .anyRequest()
                 .authenticated()
-                .and().formLogin()
+                .and().formLogin()/*.and().addFilterAfter(filter, BasicAuthenticationFilter.class)*/
                 // RESTful技术与CSRF(Cross-site request forgery跨站请求伪造)的冲突造成的，CSRF默认支持的方法： GET|HEAD|TRACE|OPTIONS，不支持POST
                 // 可以在security在配置中禁用掉它
                 .and().csrf().disable();
