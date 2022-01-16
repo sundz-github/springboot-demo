@@ -4,6 +4,7 @@ import com.sun.springbootdemo.entities.Person;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 
+import java.lang.ref.SoftReference;
 import java.util.Date;
 
 /**
@@ -13,11 +14,11 @@ import java.util.Date;
  * @date 2021/1/6 18:55
  */
 @Log4j2
-public class SoftReference {
+public class CustomSoftReference {
     @Test
     public void softTest() {
         Person p = new Person(1L, "夏侯惇", 33, "m", false, new Date(), null);
-        java.lang.ref.SoftReference<Person> softReference = new java.lang.ref.SoftReference<>(p);
+        SoftReference<Person> softReference = new SoftReference<>(p);
         // 使其能被垃圾回收期识别 回收
         p = null;
         // 通知来垃圾回收器进行回收

@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
-import java.util.ArrayList;
+import java.lang.ref.WeakReference;
 import java.util.Date;
-import java.util.List;
 
 /**
  * <p> 弱引用 </p>
@@ -17,7 +16,7 @@ import java.util.List;
  * @date 2021/1/6 20:13
  */
 @Log4j2
-public class WeakReference {
+public class CustomWeakReference {
 
     @Test
     public void weakRefereceTest() throws Exception {
@@ -32,17 +31,16 @@ public class WeakReference {
         });
         daemon.setDaemon(true);
         daemon.start();
-        List<java.lang.ref.WeakReference<Person>> list = new ArrayList<>();
-        for (int i = 0; i < 3000; i++) {
-            list.add(new java.lang.ref.WeakReference<>(new Person(1L, "夏侯惇", 33, "m", false, new Date(), null), queue));
-            log.info("插入的个人数:{}", i + 1);
+        for (int i = 0; i < 100; i++) {
+            Person person = new Person((Long.valueOf(String.valueOf(i + 1))), "夏侯惇", 33, "m", false, new Date(), null);
+            WeakReference<Person> personWeakReference = new WeakReference<>(person, queue);
+            person = null;
+            log.info("当前人数:{}", i + 1);
+            System.gc();
+            Person p = personWeakReference.get();
+            log.info("Person:{}", p);
         }
-        list = null;
         System.gc();
-        //TimeUnit.SECONDS.sleep(2);
-        //log.info("回收后:weakReference:{}", weakReference.get());
-
-
     }
 
 
